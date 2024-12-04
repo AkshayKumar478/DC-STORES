@@ -59,7 +59,6 @@ const offerSchema = new mongoose.Schema({
             return this.type === 'PRODUCT';
         }
     },
-    // For referral offers
     referralDetails: {
         referrerBonus: {
             type: Number,
@@ -82,7 +81,7 @@ const offerSchema = new mongoose.Schema({
     },
     usageLimit: {
         type: Number,
-        default: null // null means unlimited
+        default: null 
     },
     usageCount: {
         type: Number,
@@ -92,7 +91,6 @@ const offerSchema = new mongoose.Schema({
     timestamps: true
 });
 
-// Add index for efficient querying
 offerSchema.index({ type: 1, isActive: 1 });
 offerSchema.index({ startDate: 1, endDate: 1 });
 

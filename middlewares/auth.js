@@ -8,7 +8,7 @@ async function checkUserBlocked(req, res, next){
         const user = await User.findOne({ email: req.body.email });
         
         if (user && user.isBlocked) {
-            // Clear any existing session
+       
             req.session.destroy((err) => {
                 if (err) {
                     console.error('Session destruction error:', err);
@@ -81,5 +81,4 @@ function redirectHomeIfUser(req,res,next){
     }
     next()
 }
-// function redirectHome
 module.exports={redirectProfileIfLoggedIn, redirectAdminLoginIfLogout,redirectAdminDashIfLogin,redirectHomeIfUser,checkUserBlocked ,protectBlockedUser,};

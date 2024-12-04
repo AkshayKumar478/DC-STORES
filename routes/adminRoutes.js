@@ -41,7 +41,7 @@ router.get('/admin/products/add',redirectAdminLoginIfLogout,productController.ge
 router.post('/admin/products/add', upload.array('images', 3), productController.postAddProduct);
 router.post('/admin/products/delete/:id',productController.postDeleteProduct)
 router.post('/admin/products/toggle/:id',productController.postToggleProductStatus)
-router.get('/admin/products/edit/:id', redirectAdminLoginIfLogout, productController.getEditProduct); // Render edit page
+router.get('/admin/products/edit/:id', redirectAdminLoginIfLogout, productController.getEditProduct); 
 router.post('/admin/products/edit/:id', upload.array('images', 3), productController.postEditProduct);
 
 

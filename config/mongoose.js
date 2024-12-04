@@ -1,8 +1,8 @@
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
-mongoose.connect("mongodb://localhost:27017/DC_stores",{
-    serverSelectionTimeoutMS: 30000,
-})
+const dbURI = process.env.MONGO_URI;
 
-.then(()=>console.log('mongoDB Connected'))
-.catch(err=>console.log('Error:',err));
+mongoose.connect(dbURI)
+  .then(() => console.log('Connected to MongoDB Atlas'))
+  .catch(err => console.log('Error connecting to MongoDB Atlas:', err));

@@ -82,14 +82,12 @@ class AddressManager {
         const addressData = Object.fromEntries(formData.entries());
 
         try {
-            // const loading = UIUtils.showLoading();
             const response = await fetch('/user/address/add', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(addressData)
             });
             const data = await response.json();
-            // loading.close();
 
             if (data.success) {
                 await UIUtils.showAlert('success', 'Success', 'Address added successfully');
@@ -135,7 +133,7 @@ class CouponManager {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     code: couponCode,
-                    orderAmount: this.getCurrentTotal() - 40 // Subtract delivery fee
+                    orderAmount: this.getCurrentTotal() - 40 
                 })
             });
 
@@ -162,21 +160,17 @@ class CouponManager {
         const applyButton = document.getElementById('applyCoupon');
         const removeButton=document.getElementById('removeCoupon')
 
-        // Show discount row
         discountRow.style.display = 'flex';
         
-        // Update amounts
         discountAmountEl.textContent = `-₹${discountAmount.toFixed(2)}`;
         finalAmountEl.textContent = `₹${(finalAmount + 40).toFixed(2)}`;
 
-        // Disable coupon input
         couponInput.disabled = true;
         applyButton.disabled = true;
         couponInput.disabled = true;
         applyButton.style.display = 'none';
         removeButton.style.display = 'inline-block';
 
-        // Show success message
         messageDiv.textContent = `Coupon applied successfully! ${coupon.discountType === 'percentage' ? 
             `${coupon.discountValue}% off` : 
             `₹${coupon.discountValue} off`}`;
@@ -190,14 +184,12 @@ class CouponManager {
         const applyButton = document.getElementById('applyCoupon');
         const finalAmountEl = document.getElementById('finalAmount');
 
-        // Reset UI
         discountRow.style.display = 'none';
         couponInput.disabled = false;
         couponInput.value = '';
         applyButton.disabled = false;
         messageDiv.textContent = '';
         
-        // Reset amounts
         const subtotal = this.getCurrentTotal() - 40;
         finalAmountEl.textContent = `₹${(subtotal + 40).toFixed(2)}`;
 
@@ -277,7 +269,6 @@ class PaymentManager {
 
     async handlePaymentFailure(errorMessage = 'Payment failed') {
         try {
-            // Update order status to failed
             const response = await fetch('/user/checkout/verify-payment', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -291,7 +282,6 @@ class PaymentManager {
             const data = await response.json();
             if (!data.success) throw new Error(data.message);
 
-            // Show failure message to user
             const result = await Swal.fire({
                 title: 'Payment Failed',
                 text: `${errorMessage}. Would you like to retry?`,
@@ -337,7 +327,6 @@ class PaymentManager {
 
 class CheckoutManager {
     constructor() {
-          // Initialize all required elements
           this.modal = document.getElementById('addAddressModal');
           this.form = document.getElementById('addAddressForm');
           this.addressManager = new AddressManager(this.modal, this.form);
@@ -345,7 +334,6 @@ class CheckoutManager {
           this.paymentManager = new PaymentManager();
           this.placeOrderButton = document.getElementById('place-order');
           
-          // Bind methods to maintain correct 'this' context
           this.handleAddressSubmission = this.handleAddressSubmission.bind(this);
           this.openModal = this.openModal.bind(this);
           this.closeModal = this.closeModal.bind(this);
@@ -376,31 +364,26 @@ class CheckoutManager {
             button.addEventListener('click', this.openModal);
         });
 
-        // Modal close button
         const closeButton = this.modal.querySelector('.close-modal');
         if (closeButton) {
             closeButton.addEventListener('click', this.closeModal);
         }
 
-        // Close modal on outside click
         this.modal.addEventListener('click', (e) => {
             if (e.target === this.modal) {
                 this.closeModal();
             }
         });
 
-        // Save address button
         const saveButton = document.getElementById('saveAddress');
         if (saveButton) {
             saveButton.addEventListener('click', this.handleAddressSubmission);
         }
 
-        // Place order button
         if (this.placeOrderButton) {
             this.placeOrderButton.addEventListener('click', () => this.placeOrder());
         }
 
-        // Form input validation
         this.form.querySelectorAll('input, select').forEach(input => {
             input.addEventListener('blur', () => this.validateInput(input));
             input.addEventListener('input', () => this.validateInput(input));
@@ -411,7 +394,6 @@ class CheckoutManager {
         const isValid = input.checkValidity();
         input.classList.toggle('error', !isValid);
 
-        // Additional validation for specific fields
         if (input.name === 'phone') {
             const isValidPhone = ValidationUtils.validatePhone(input.value);
             input.classList.toggle('error', !isValidPhone);
@@ -445,14 +427,12 @@ class CheckoutManager {
         this.modal.classList.add('active');
         this.form.reset();
         this.clearValidationStyles();
-        // Prevent body scroll when modal is open
         document.body.style.overflow = 'hidden';
     }
 
     closeModal() {
         this.modal.classList.remove('active');
         this.clearValidationStyles();
-        // Restore body scroll when modal is closed
         document.body.style.overflow = '';
     }
 
@@ -515,7 +495,7 @@ class CheckoutManager {
             
             
 
-            // const loading = UIUtils.showLoading();
+            ;
             const response = await fetch('/user/checkout/create-order', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -527,7 +507,6 @@ class CheckoutManager {
             });
 
             const orderData = await response.json();
-            // loading.close();
 
             if (!orderData.success) throw new Error(orderData.message);
             this.paymentManager.orderId = orderData.order._id;

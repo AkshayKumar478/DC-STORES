@@ -8,7 +8,7 @@ const categorySchema = new mongoose.Schema({
     },
     isListed: {
         type: Boolean,
-        default: true,  // Initially all categories are listed
+        default: true, 
     },
     image: {
         type: String,  
