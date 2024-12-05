@@ -44,7 +44,7 @@ exports.getCheckout = async (req, res) => {
             },
             minOrderValue: { $lte: finalAmount }
         });
-        res.render('user/checkout', {
+        res.render('user/checkOut', {
             cart,
             addresses,
             totalAmount,
