@@ -156,14 +156,6 @@
 }
 
 
-
-/* A mini-Navbar css for Home */
-/* .mini-nav, .container {
-    max-width: 1200px; 
-    margin: 0 auto; 
-    padding: 0 20px; 
-} */
-
 .mini-nav {
     display: flex;
     justify-content: space-between;
@@ -196,7 +188,7 @@
 
 
 .section4 {
-    background-image: url(../images/homebg2.WebP);
+    background-image: url('/images/homebg2.WebP');
     background-size: cover;
     background-repeat: no-repeat;
 
@@ -286,7 +278,7 @@
 }
 
 .section5 {
-    background-image: url(../images/homebg3.WebP);
+    background-image: url('/images/homebg3.WebP');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -307,7 +299,7 @@
 }
 
 .section7 {
-    background-image: url(../images/homebg4.webp);
+    background-image: url('/images/homebg4.webp');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
