@@ -308,7 +308,7 @@
 }
 
 .section7 {
-    background-image: url(../images/homebg4.WebP);
+    background-image: url(../images/homebg4.webp);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -329,7 +329,7 @@
 }
 
 
-/* Media query for responsiveness */
+
 @media (max-width: 768px) {
     .mini-nav {
         flex-direction: column;
@@ -360,64 +360,57 @@
 
     .section1 {
         height: 80vh;
-        /* Adjust height for smaller screens */
+
         background-position: top;
     }
 
     .description1 {
         width: 90%;
-        /* Make text area larger */
+
         padding: 15px;
     }
 
     .description1 h1 {
         font-size: 36px;
-        /* Smaller heading */
+
     }
 
     .description1 p {
         font-size: 16px;
-        /* Adjust paragraph size */
+
     }
 
     .btnHome {
         width: 250px;
-        /* Smaller button */
         height: 45px;
     }
 
 
     .section4 {
         height: 80vh;
-        /* Adjust height for smaller screens */
         background-position: top;
     }
 
     .description4 {
         width: 90%;
-        /* Make text area larger */
         padding: 15px;
     }
 
     .description4 h1 {
         font-size: 36px;
-        /* Smaller heading */
     }
 
     .description4 p {
         font-size: 16px;
-        /* Adjust paragraph size */
     }
 
     .section5 {
         height: 80vh;
-        /* Adjust height for smaller screens */
         background-position: top;
     }
 
     .section7 {
         height: 80vh;
-        /* Adjust height for smaller screens */
         background-position: top;
     }
 }
@@ -427,28 +420,23 @@
         grid-template-columns: 1fr;
     }
 
-    /* .section1 {
-        min-height: 50vh;
-    } */
+
     .section1 {
         height: auto;
         padding: 20px;
         align-items: center;
-        /* Center-align for small screens */
     }
 
     .section5 {
         height: auto;
         padding: 20px;
         align-items: center;
-        /* Center-align for small screens */
     }
 
     .section7 {
         height: auto;
         padding: 20px;
         align-items: center;
-        /* Center-align for small screens */
     }
 
     .price-container {
@@ -527,19 +515,16 @@
         height: auto;
         padding: 20px;
         align-items: center;
-        /* Center-align for small screens */
     }
 
     .description4 {
         width: 100%;
         padding: 10px;
         text-align: center;
-        /* Center the text */
     }
 
     .description4 h1 {
         font-size: 28px;
-        /* Smaller heading */
     }
 
     .description4 p {
