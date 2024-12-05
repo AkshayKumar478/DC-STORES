@@ -25,7 +25,7 @@ passport.use(new LocalStrategy({ usernameField: 'email' },
 passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://dcstores.ddns.net:4247/user/auth/google/callback"
+    callbackURL: "/user/auth/google/callback"
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
@@ -37,7 +37,7 @@ passport.use(new GoogleStrategy({
         const newUser = new User({
           name: profile.displayName,
           email: profile.emails[0].value,
-          password: Math.random().toString(36).slice(-8), // Generate a random password
+          password: Math.random().toString(36).slice(-8), 
         });
         
         await newUser.save();
