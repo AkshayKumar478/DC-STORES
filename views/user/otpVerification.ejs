@@ -82,7 +82,7 @@
             const otpInput = document.getElementById('otpInput');
             const otpForm = document.getElementById('otpForm');
 
-            const totalTime = 120; // 2 minutes in seconds
+            const totalTime = 120;
             let timeLeft = parseInt(localStorage.getItem('otpTimeLeft')) || totalTime;
             let timerInterval;
 
@@ -109,19 +109,19 @@
                 }
             }
 
-            // Start timer when the page loads
+
             startTimer();
 
-            // OTP input formatting
+
             otpInput.addEventListener('input', function (e) {
                 e.target.value = e.target.value.replace(/[^0-9]/g, '');
             });
 
-            // Resend button click handler
+
             resendButton.addEventListener('click', function () {
                 resendButton.disabled = true;
 
-                // AJAX call to resend OTP
+
                 $.ajax({
                     url: '/user/resend-otp',
                     method: 'POST',
@@ -146,7 +146,6 @@
                 });
             });
 
-            // Prevent form submission if OTP has expired
             otpForm.addEventListener('submit', function (e) {
                 if (timeLeft <= 0) {
                     e.preventDefault();

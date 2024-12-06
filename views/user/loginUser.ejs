@@ -89,7 +89,6 @@
 
     </script>
     <style>
-        /* Existing styles remain the same */
         .error-message {
             color: red;
             font-size: 0.875rem;
@@ -110,19 +109,15 @@
 
 <body>
 
-    <!-- Main container to divide the page -->
     <div class="main-container">
 
-        <!-- Left side (Navbar + Login) -->
         <div class="left-side">
-            <!-- Navbar -->
             <nav class="navbar">
                 <a class="navbar-brand" href="#">
                     <img src="/images/logo.svg" alt="Logo">
                 </a>
             </nav>
 
-            <!-- Login Form -->
             <div class="login-container">
                 <h1>Login Page</h1>
                 <% if (error_msg.length> 0) { %>
@@ -155,7 +150,6 @@
                             <div id="password-error" class="error-message"></div>
                             <button type="submit" class="btnLogin">Login</button>
 
-                            <!-- Forgot Password and Signup Links -->
                             <div class="text-center mt-3">
                                 <a href="#">Forgot password?</a>
                             </div>
@@ -164,7 +158,6 @@
                                 <a href="/admin/login">Are you an Admin? Login here</a>
                             </div>
 
-                            <!-- Google Login Button -->
                             <div class="social-login mt-4">
                                 <button type="button" class="btn btn-light btn-block">
                                     <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google logo">
@@ -175,13 +168,11 @@
             </div>
         </div>
 
-        <!-- Right side (Image) -->
         <div class="right-side">
             <img src="/images/sinupbg.webp" alt="Right Side Image">
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

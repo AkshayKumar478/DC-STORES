@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Signup Page</title>
-    <!-- Bootstrap CSS -->
 
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/stylesheets/userLogin.css">
@@ -14,19 +13,15 @@
 
 <body>
 
-    <!-- Main container -->
     <div class="main-container">
 
-        <!-- Left side -->
         <div class="left-side">
-            <!-- Navbar -->
             <nav class="navbar">
                 <a class="navbar-brand" href="#">
                     <img src="/images/logo.svg" alt="Logo">
                 </a>
             </nav>
 
-            <!-- Login Form -->
             <div class="login-container">
                 <h1>SignUp</h1>
                 <div id="error-msg" style="color: red;"></div>
@@ -52,7 +47,6 @@
                     <div id="confirmPassword-error" class="error-message" style="color: red;"></div>
                     <button type="submit" class="btnLogin">Signup</button>
 
-                    <!-- Forgot Password and Signup Links -->
                     <div class="text-center mt-3">
                         <a href="#">Forgot password?</a>
                     </div>
@@ -70,14 +64,12 @@
             </div>
         </div>
 
-        <!-- Right side Image -->
         <div class="right-side">
             <img src="/images/loginbg.webp" alt="Right Side Image">
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        // Function to validate email format
         function validateEmail(email) {
             const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
             return emailPattern.test(email);
@@ -111,13 +103,11 @@
 
             let isValid = true;
 
-            // Clear all error messages
             document.getElementById('name-error').textContent = '';
             document.getElementById('email-error').textContent = '';
             document.getElementById('password-error').textContent = '';
             document.getElementById('confirmPassword-error').textContent = '';
 
-            // Validate name
             if (nameInput === '') {
                 document.getElementById('name-error').textContent = 'Please enter your name.';
                 isValid = false;
@@ -126,7 +116,6 @@
                 isValid = false;
             }
 
-            // Validate email
             if (emailInput === '') {
                 document.getElementById('email-error').textContent = 'Please enter your email address.';
                 isValid = false;
@@ -135,7 +124,6 @@
                 isValid = false;
             }
 
-            // Validate password
             if (passwordInput === '') {
                 document.getElementById('password-error').textContent = 'Please enter your password.';
                 isValid = false;
@@ -144,7 +132,6 @@
                 isValid = false;
             }
 
-            // Validate confirm password
             if (confirmPasswordInput === '') {
                 document.getElementById('confirmPassword-error').textContent = 'Please confirm your password.';
                 isValid = false;

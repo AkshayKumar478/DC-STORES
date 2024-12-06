@@ -7,15 +7,12 @@
     <title>
         <%= title %>
     </title>
-    <!-- google fonts cdn-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Edu+AU+VIC+WA+NT+Guides:wght@400..700&family=Manrope:wght@200..800&display=swap">
 
-    <!-- font-awesome cdn -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <!-- bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/layoutStyle.css">
 
@@ -25,10 +22,8 @@
 
 <body>
 
-    <!-- Nav Partial -->
     <%- include('partials/adminSideBar') %>
 
-        <!-- Main Content-->
         <div class="content">
             <%- include(content) %>
         </div>
@@ -36,10 +31,8 @@
 
 
 
-        <!--Footer Partial -->
         <%- include('partials/footerAdmin') %>
 
-            <!-- Add Bootstrap JS and jQuery (optional for Bootstrap features) -->
             <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

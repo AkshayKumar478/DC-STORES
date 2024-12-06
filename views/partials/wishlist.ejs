@@ -6,7 +6,6 @@
             <div class="card filter-card">
                 <div class="card-body">
                     <div class="row">
-                        <!-- Search Field -->
                         <div class="col-12 mb-3">
                             <div class="search-container">
                                 <i class="fas fa-search search-icon"></i>
@@ -14,7 +13,6 @@
                                     placeholder="Search wishlist items..." value="<%= searchQuery || '' %>">
                             </div>
                         </div>
-                        <!-- Filters Section -->
                         <div class="row mb-4">
                             <div class="col-12">
                                 <div class="card filter-card">
@@ -57,7 +55,6 @@
                             </div>
                         </div>
 
-                        <!-- Products Grid -->
                         <div class="row" id="productsContainer">
                             <% if (products.length===0) { %>
                                 <div class="col-12 text-center py-5">
@@ -187,7 +184,6 @@
             window.location.href = url.toString();
         }
 
-        // Search input handler with debounce
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchTimeout);
             searchTimeout = setTimeout(updateFilters, 500);
@@ -200,7 +196,6 @@
             }
         });
 
-        // Filter change handlers
         sortSelect.addEventListener('change', updateFilters);
         categorySelect.addEventListener('change', updateFilters);
 
@@ -225,14 +220,12 @@
             const data = await response.json();
 
             if (response.ok) {
-                // Remove the product card from the wishlist view
                 const productCard = element.closest('.product-card');
                 productCard.remove();
 
-                // Check if there are no more products
                 const productsContainer = document.getElementById('productsContainer');
                 if (productsContainer.children.length === 0) {
-                    location.reload(); // Reload to show empty state
+                    location.reload();
                 }
 
                 swal({
