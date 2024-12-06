@@ -19,6 +19,7 @@ exports.renderCouponList = async (req, res) => {
             title:'coupon management',
             content:'partials/adminCoupons',
             coupons,
+            currentPage:'coupon',
             pagination: {
                 currentPage: parseInt(page),
                 totalPages: Math.ceil(total / limit),

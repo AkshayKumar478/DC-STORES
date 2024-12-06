@@ -22,6 +22,7 @@ exports.renderManageOffers=async(req, res)=>{
             categories, 
             products, 
             offers,
+            currentPage:'offers',
             message: req.flash('message')
         });
     } catch (error) {

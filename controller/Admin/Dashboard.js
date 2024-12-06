@@ -37,6 +37,7 @@ exports.getDashBoard = async (req, res) => {
         res.render('adminLayout', {
             title: "Dashboard",
             content: 'partials/adminDashBoard',
+            currentPage:'dashboard',
             totalUsers,
             totalProducts,
             todaysSalesAmount
