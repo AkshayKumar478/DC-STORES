@@ -60,7 +60,6 @@ exports.getSalesReport = async (req, res) => {
             content: 'partials/salesReport',
             title: 'salesReport',
             orders: aggregatedOrders,
-            currentPage:'sales',
             report,
             startDate,
             endDate,

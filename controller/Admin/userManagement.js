@@ -18,7 +18,6 @@ exports.getUsers=async (req, res) => {
     res.render('adminLayout',{
         title:"Users",
         content:'partials/usersList',
-        currentPage:'users',
         users,
         success_msg: success_msg,
         error_msg: error_msg,

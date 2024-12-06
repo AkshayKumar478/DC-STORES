@@ -50,53 +50,32 @@
     </div>
     <ul class="nav flex-column">
         <li class="nav-item">currentPage
-            <a class="nav-link" <%=currentPage==='dashboard' ? 'active' : '' %> href="/admin/dashboard"><i
-                    class="fas fa-tachometer-alt"></i> Dashboard</a>
+            <a class="nav-link" href="/admin/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='users' ? 'active' : '' %>href="/admin/users"><i
-                    class="fas fa-users"></i> Manage Users</a>
+            <a class="nav-link" href="/admin/users"><i class="fas fa-users"></i> Manage Users</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='products' ? 'active' : '' %> href='/admin/products'><i
-                    class="fas fa-box"></i> Manage Products</a>
+            <a class="nav-link" href='/admin/products'><i class="fas fa-box"></i> Manage Products</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='orders' ? 'active' : '' %> href="/admin/orders"><i
-                    class="fas fa-receipt"></i> Manage Orders</a>
+            <a class="nav-link" href="/admin/orders"><i class="fas fa-receipt"></i> Manage Orders</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='category' ? 'active' : '' %>href="/admin/categories"><i
-                    class="fas fa-th-list"></i> Manage Categories</a>
+            <a class="nav-link" href="/admin/categories"><i class="fas fa-th-list"></i> Manage Categories</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='coupon' ? 'active' : '' %> href="/admin/coupons"><i
-                    class="fa-solid fa-ticket"></i> Coupon
+            <a class="nav-link" href="/admin/coupons"><i class="fa-solid fa-ticket"></i> Coupon
                 Management</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='offers' ? 'active' : '' %> href="/admin/offers/manage"><i
-                    class="fa-solid fa-tags"></i> Offers</a>
+            <a class="nav-link" href="/admin/offers/manage"><i class="fa-solid fa-tags"></i> Offers</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" <%=currentPage==='sales' ? 'active' : '' %> href="/admin/sales-report"><i
-                    class="fa-solid fa-clipboard-list"></i> Sales Report</a>
+            <a class="nav-link" href="/admin/sales-report"><i class="fa-solid fa-clipboard-list"></i> Sales Report</a>
         </li>
         <li class="nav-item">
             <a class="nav-link text-danger" href="/admin/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
         </li>
     </ul>
 </nav>
-
-<script>
-    $(document).ready(function () {
-        $('#sidebarCollapse').on('click', function () {
-            $('#sidebar').toggleClass('active');
-        });
-
-        $('.nav-link').on('click', function () {
-            $('.nav-link').removeClass('active');
-            $(this).addClass('active');
-        });
-    });
-</script>

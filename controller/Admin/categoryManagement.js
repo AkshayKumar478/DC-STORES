@@ -12,7 +12,6 @@ exports.getCategories = async (req, res) => {
             title:'Category',
             content:'partials/adminCategory',
             categories,
-            currentPage:'category',
             error:req.flash('error_msg')|| null,
             success_msg:req.flash('success_msg')||null
         });

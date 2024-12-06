@@ -17,7 +17,6 @@ exports.getProducts=async(req,res)=>{
         res.render('adminLayout',{
             title:"Products",
             content:'partials/adminProductList',
-            currentPage:'products',
             products
         }) 
     }catch(error){

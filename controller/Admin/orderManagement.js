@@ -23,7 +23,6 @@ exports.orderManagement = async (req, res) => {
         res.render('adminLayout', {
             content: 'partials/adminOrders',
             title: 'Order Management',
-            currentPage:'orders',
             orders: modifiedOrders,
             messages: req.flash()
         });
