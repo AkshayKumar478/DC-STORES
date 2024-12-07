@@ -306,14 +306,18 @@ exports.clearCart = async (req, res) => {
 };
 
 
-exports.getCartCount=async(req, res) => {
+exports.getCartCount = async (req, res) => {
     try {
+        console.log('Session user:', req.session.user);
+
         if (!req.session.user) {
             return res.json({ success: true, cartCount: 0 });
         }
 
         const cart = await Cart.findOne({ userId: req.session.user._id });
         const cartCount = cart ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
+
+        console.log('Cart count for user:', cartCount);
 
         res.json({ 
             success: true, 
@@ -323,7 +327,8 @@ exports.getCartCount=async(req, res) => {
         console.error('Cart Count Error:', error);
         res.status(500).json({
             success: false,
-            message: 'Error fetching cart count'
+            message: 'Error fetching cart count',
+            error: error.message
         });
     }
 }
