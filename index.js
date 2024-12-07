@@ -22,11 +22,7 @@ app.use(session({
   secret:"my_secret_Key",
   resave:true,
   saveUninitialized:false,
-  cookie: {
-    secure: process.env.NODE_ENV === 'production', // This will make cookies secure only in production
-    sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours
-  }
+  cookie:{secure:false},
 }))
 app.use(flash());
 app.use(passport.initialize());

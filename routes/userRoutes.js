@@ -12,7 +12,7 @@ const addressController=require('../controller/User/addressController')
 const wishListController=require('../controller/User/WishListController')
 const couponController=require('../controller/User/CouponsList')
 const walletController=require('../controller/User/UserWallet')
-const cartCountMiddleware=require('../middlewares/cartCounter')
+
 
 
 const {redirectProfileIfLoggedIn, redirectAdminLoginIfLogout,redirectAdminDashIfLogin,redirectHomeIfUser,checkUserBlocked ,protectBlockedUser,}=require('../middlewares/auth')
@@ -24,7 +24,7 @@ const router = express.Router();
 router.get('/',(req,res)=>{
     res.redirect('/user/home');
 })
-router.get('/user/home',redirectAdminDashIfLogin,cartCountMiddleware,signupController.getHome)
+router.get('/user/home',redirectAdminDashIfLogin,signupController.getHome)
 // Login
 router.get('/user/login',redirectHomeIfUser,redirectAdminDashIfLogin, loginController.getLoginUser)
 router.post('/user/login',loginController.postLoginUser)
@@ -49,11 +49,11 @@ router.post('/user/resend-otp',protectBlockedUser, signupController.resendOTP);
 
 //================Product List===============================================================================
 
-router.get('/user/productList',protectBlockedUser,cartCountMiddleware, productController.getProductList);
+router.get('/user/productList',protectBlockedUser, productController.getProductList);
 
 
 
-router.get('/user/productList/:id',redirectAdminDashIfLogin,protectBlockedUser,cartCountMiddleware,productController.getProductDetails)
+router.get('/user/productList/:id',redirectAdminDashIfLogin,protectBlockedUser,productController.getProductDetails)
 
 //================ AddressBook ===========================================================//
 router.get('/user/address',protectBlockedUser,addressController.getAddressBook)
@@ -64,8 +64,8 @@ router.delete('/user/address/:id',protectBlockedUser,addressController.deleteAdd
 router.get('/user/address/:id',protectBlockedUser,addressController.getAddress)
 //======================= CART===================================================//
 
-router.get('/user/cart', redirectProfileIfLoggedIn,cartCountMiddleware,protectBlockedUser,cartController.getCart);
-router.get('/user/cart/count',protectBlockedUser,cartCountMiddleware, cartController.getCartCount);
+router.get('/user/cart', redirectProfileIfLoggedIn,protectBlockedUser,cartController.getCart);
+router.get('/user/cart/count',protectBlockedUser, cartController.getCartCount);
 router.post('/user/cart/add',protectBlockedUser, cartController.addToCart);
 router.put('/user/cart/update', protectBlockedUser,cartController.updateQuantity);
 router.delete('/user/cart/delete/:productId',protectBlockedUser, cartController.removeItem);
@@ -86,7 +86,7 @@ router.post('/user/orders/:orderId/items/:itemId/return',protectBlockedUser, ord
 router.post('/user/orders/:orderId/retry-payment', protectBlockedUser,checkoutController.retryPayment);
 router.get('/user/orders/:orderId/invoice',redirectProfileIfLoggedIn,protectBlockedUser,orderController.downloadInvoice)
 //<<========================== WishList ===========================================>>
-router.get('/user/wishlist',redirectProfileIfLoggedIn,protectBlockedUser,cartCountMiddleware,wishListController.getWishList)
+router.get('/user/wishlist',redirectProfileIfLoggedIn,protectBlockedUser,wishListController.getWishList)
 router.post('/user/wishlist/toggle',wishListController.toggleWishlist)
 //<<=========================== CouponList ===============================================>>//
 router.get('/user/couponList',redirectProfileIfLoggedIn,protectBlockedUser,couponController.getCoupon)
