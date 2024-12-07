@@ -24,43 +24,52 @@
 
             <div class="login-container">
                 <h1>SignUp</h1>
-                <div id="error-msg" style="color: red;"></div>
-                <form method="POST" action="/user/signup" onsubmit="return validateSignupForm()">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name">
-                    </div>
-                    <div id="name-error" class="error-message" style="color: red;"></div>
-                    <div class="form-group">
-                        <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
-                    </div>
-                    <div id="email-error" class="error-message" style="color: red;"></div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="password" id="password"
-                            placeholder="Enter password">
 
+                <% if (error_msg) { %>
+                    <div id="flash-message" class=" alert-dismissible fade show"
+                        style="background-color: white; color:red; padding: 5px;" role="alert">
+                        <%= error_msg %>
                     </div>
-                    <div id="password-error" class="error-message" style="color: red;"></div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
-                            placeholder="Confirm password">
-                    </div>
-                    <div id="confirmPassword-error" class="error-message" style="color: red;"></div>
-                    <button type="submit" class="btnLogin">Signup</button>
+                    <% } %>
+                        <div id="error-msg" style="color: red; border:none"></div>
+                        <form method="POST" action="/user/signup" onsubmit="return validateSignupForm()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" id="name"
+                                    placeholder="Enter your name">
+                            </div>
+                            <div id="name-error" class="error-message" style="color: red;"></div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="email" id="email"
+                                    placeholder="Enter email">
+                            </div>
+                            <div id="email-error" class="error-message" style="color: red;"></div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="password" id="password"
+                                    placeholder="Enter password">
 
-                    <div class="text-center mt-3">
-                        <a href="#">Forgot password?</a>
-                    </div>
-                    <div class="text-center mt-2">
-                        <a href="/user/login">Have an account? Sign in here</a><br>
-                        <a href="/admin/login">Are you an Admin? Login here</a>
-                    </div>
-                    <div class="social-login mt-4">
-                        <button type="button" class="btn btn-light btn-block">
-                            <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google logo">
-                            <a href="/user/auth/google">Login with Google</a>
-                        </button>
-                    </div>
-                </form>
+                            </div>
+                            <div id="password-error" class="error-message" style="color: red;"></div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword"
+                                    placeholder="Confirm password">
+                            </div>
+                            <div id="confirmPassword-error" class="error-message" style="color: red;"></div>
+                            <button type="submit" class="btnLogin">Signup</button>
+
+                            <div class="text-center mt-3">
+                                <a href="#">Forgot password?</a>
+                            </div>
+                            <div class="text-center mt-2">
+                                <a href="/user/login">Have an account? Sign in here</a><br>
+                                <a href="/admin/login">Are you an Admin? Login here</a>
+                            </div>
+                            <div class="social-login mt-4">
+                                <button type="button" class="btn btn-light btn-block">
+                                    <img src="https://img.icons8.com/color/48/000000/google-logo.png" alt="Google logo">
+                                    <a href="/user/auth/google">Login with Google</a>
+                                </button>
+                            </div>
+                        </form>
             </div>
         </div>
 
@@ -173,6 +182,22 @@
                 });
             }
         });
+
+
+
+        setTimeout(() => {
+            const flashMessage = document.getElementById('flash-message');
+            if (flashMessage) {
+
+                flashMessage.style.transition = 'opacity 0.5s ease';
+                flashMessage.style.opacity = '0';
+
+
+                setTimeout(() => {
+                    flashMessage.remove();
+                }, 500);
+            }
+        }, 5000); 
     </script>
 
 
