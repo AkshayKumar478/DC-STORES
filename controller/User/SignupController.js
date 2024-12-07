@@ -2,6 +2,7 @@
 const User = require('../../models/userSchema');
 const Category=require('../../models/categorySchema')
 const Product=require('../../models/productSchema')
+const cartController=require('../../middlewares/cartCounter')
 
 const OTP = require('../../models/otpSchema');
 const nodemailer = require('nodemailer');
@@ -91,6 +92,7 @@ exports.getHome = async(req, res) => {
             menProducts,
             seasonalProducts,
             womenProducts,
+            cartCount: cartCount ,
         });
     }catch(error){
 
