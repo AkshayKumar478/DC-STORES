@@ -8,6 +8,7 @@ const adminRoutes=require('./routes/adminRoutes.js')
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT;
+const cartCountMiddleware=require('./middlewares/cartCounter.js')
 
 app.use(express.static("public"));
 
@@ -40,6 +41,8 @@ app.use((req, res, next) => {
   res.locals.error_msg = req.flash('error_msg');
   next();
 });
+app.use(cartCountMiddleware)
+
 app.use("/", userRoutes);
 app.use("/",adminRoutes)
 app.use((req,res)=>{

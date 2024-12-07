@@ -287,6 +287,7 @@ exports.clearCart = async (req, res) => {
             cart.items = [];
             cart.total = 0;
             await cart.save();
+            
         }
 
         res.json({
@@ -304,15 +305,19 @@ exports.clearCart = async (req, res) => {
     }
 };
 
-// controller to get cart item count
-exports.getCartCount = async (req, res) => {
-    try {
-        const cart = await Cart.findOne({ userId: req.session.user._id });
-        const count = cart ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
 
-        res.json({
-            success: true,
-            count: count
+exports.getCartCount=async(req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.json({ success: true, cartCount: 0 });
+        }
+
+        const cart = await Cart.findOne({ userId: req.session.user._id });
+        const cartCount = cart ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
+
+        res.json({ 
+            success: true, 
+            cartCount: cartCount 
         });
     } catch (error) {
         console.error('Cart Count Error:', error);
@@ -321,4 +326,4 @@ exports.getCartCount = async (req, res) => {
             message: 'Error fetching cart count'
         });
     }
-};
+}

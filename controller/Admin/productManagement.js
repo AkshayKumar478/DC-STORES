@@ -10,9 +10,7 @@ exports.getProducts=async(req,res)=>{
     try{
         const products=await Product.find({});
         if (!products || products.length === 0) {
-            req.flash('error_msg', 'No products found.');
-            console.log('error finding product');
-            
+            req.flash('error_msg', 'No products found.');            
         }
         res.render('adminLayout',{
             title:"Products",

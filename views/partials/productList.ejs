@@ -219,8 +219,6 @@
                                         });
                                     }
                                 }
-
-
                                 async function addToCart(productId) {
                                     try {
                                         const response = await fetch('/user/cart/add', {
@@ -237,6 +235,9 @@
                                         const data = await response.json();
 
                                         if (response.ok) {
+                                            // Update the cart count in the navigation
+                                            updateNavCartCount();
+
                                             swal({
                                                 title: "Success!",
                                                 text: "Product added to cart successfully!",
@@ -244,9 +245,11 @@
                                                 button: "OK",
                                             });
                                         } else {
-                                            throw new Error(data.message);
+                                            throw new Error(data.message || 'Failed to add product to cart');
                                         }
                                     } catch (error) {
+                                        console.error('Add to Cart Error:', error);
+
                                         swal({
                                             title: "Error!",
                                             text: error.message || "Failed to add product to cart",

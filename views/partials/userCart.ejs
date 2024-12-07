@@ -277,6 +277,7 @@
             .then(data => {
                 if (data.success) {
                     document.getElementById('grand-total').textContent = data.total.toFixed(2);
+                    updateNavCartCount(); // Add this line
                 } else {
                     Swal.fire({
                         icon: 'error',
@@ -310,6 +311,7 @@
                 if (data.success) {
                     cartItem.remove();
                     updateGrandTotal();
+                    updateNavCartCount(); // Add this line
                     Swal.fire({
                         icon: 'success',
                         title: 'Item Removed',
@@ -346,6 +348,7 @@
             });
     }
 
+
     function clearCart() {
         fetch('/user/cart/clear', {
             method: 'DELETE'
@@ -353,6 +356,7 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
+                    updateNavCartCount(); // Add this line
                     Swal.fire({
                         icon: 'success',
                         title: 'Cart Cleared',

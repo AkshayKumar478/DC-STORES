@@ -248,6 +248,7 @@
             });
 
             if (response.ok) {
+                updateNavCartCount();
                 Swal.fire({
                     title: 'Added to Cart!',
                     text: 'Product has been added to your cart successfully',

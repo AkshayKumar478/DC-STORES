@@ -150,7 +150,6 @@ exports.createOrder = async (req, res) => {
         
             });
             razorpayOrderId = razorpayOrder.id;
-            console.log(razorpayOrder);
             
                
         }

@@ -75,20 +75,7 @@ exports.getHome = async(req, res) => {
             status:'listed'
         }).limit(4)
 
-        console.log('Men Category ID:', menCategory?._id);
-        console.log('Men Products Query:', {
-            Category: menCategory?._id,
-            status: 'listed'
-        });
 
-        // Double-check product schema
-        const allProducts = await Product.find({});
-        console.log('All Products:', allProducts.map(p => ({
-            id: p._id,
-            name: p.productName,
-            category: p.category._id,
-            status: p.status
-        })));
 
         womenProducts= await Product.find({
             category:womenCategory._id,
@@ -96,11 +83,6 @@ exports.getHome = async(req, res) => {
         }).limit(4)
         
 
-        console.log('Men Products:', menProducts.map(p => ({
-            name: p.productName,
-            price: p.price,
-            images: p.images
-        })));
 
         res.render('layout', {
             title: "Home",
