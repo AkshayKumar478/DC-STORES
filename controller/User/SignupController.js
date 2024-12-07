@@ -92,7 +92,6 @@ exports.getHome = async(req, res) => {
             menProducts,
             seasonalProducts,
             womenProducts,
-            cartCount: cartCount ,
         });
     }catch(error){
 
