@@ -120,13 +120,14 @@ class CouponManager {
     async applyCoupon() {
         const couponCode = document.getElementById('couponCode')?.value.trim();
         const messageDiv = document.getElementById('couponMessage');
+        const applyButton = document.getElementById('applyCoupon');
         
         if (!couponCode) {
             messageDiv.textContent = 'Please enter a coupon code';
             messageDiv.className = 'coupon-message error';
             return;
         }
-
+    
         try {
             const response = await fetch('/validate-coupon', {
                 method: 'POST',
@@ -136,21 +137,37 @@ class CouponManager {
                     orderAmount: this.getCurrentTotal() - 40 
                 })
             });
-
+    
             const data = await response.json();
-
+    
             if (data.success) {
                 this.updateCouponUI(data.discountAmount, data.finalAmount, data.coupon);
                 this.appliedCoupon = data.coupon;
             } else {
-                throw new Error(data.message);
+               
+                messageDiv.textContent = data.message || 'Invalid coupon';
+                messageDiv.className = 'coupon-message error';
+                
+                document.getElementById('couponCode').disabled = false;
+                applyButton.disabled = false;
+                applyButton.style.display = 'inline-block';
+                document.getElementById('removeCoupon').style.display = 'none';
+                
+                this.appliedCoupon = null;
             }
         } catch (error) {
             messageDiv.textContent = error.message;
             messageDiv.className = 'coupon-message error';
+            
+        
+            document.getElementById('couponCode').disabled = false;
+            applyButton.disabled = false;
+            applyButton.style.display = 'inline-block';
+            document.getElementById('removeCoupon').style.display = 'none';
+            
+            this.appliedCoupon = null;
         }
     }
-
     updateCouponUI(discountAmount, finalAmount, coupon) {
         const messageDiv = document.getElementById('couponMessage');
         const discountRow = document.querySelector('.discount-row');
@@ -182,22 +199,30 @@ class CouponManager {
         const discountRow = document.querySelector('.discount-row');
         const couponInput = document.getElementById('couponCode');
         const applyButton = document.getElementById('applyCoupon');
+        const removeButton = document.getElementById('removeCoupon');
         const finalAmountEl = document.getElementById('finalAmount');
-
+        const subtotalEl = document.querySelector('.total-row span:nth-child(2)');
+    
         discountRow.style.display = 'none';
-        couponInput.disabled = false;
+    
         couponInput.value = '';
+        couponInput.disabled = false;
+    
+       
+        removeButton.style.display = 'none';
+        applyButton.style.display = 'inline-block';
         applyButton.disabled = false;
-        messageDiv.textContent = '';
-        
-        const subtotal = this.getCurrentTotal() - 40;
-        finalAmountEl.textContent = `₹${(subtotal + 40).toFixed(2)}`;
-
+    
+      
+        const subtotal = parseFloat(subtotalEl.textContent.replace('₹', ''));
+        const finalTotal = subtotal + 40;
+        finalAmountEl.textContent = `₹${finalTotal.toFixed(2)}`;
+    
+      
+        messageDiv.textContent = 'Coupon removed successfully!';
+        messageDiv.className = 'coupon-message success';
+    
         this.appliedCoupon = null;
-        messageDiv.style.color='red'
-        messageDiv.textContent = `Coupon removed successfully!`;
-        
-    messageDiv.className = 'coupon-message success';
     }
 }
 
