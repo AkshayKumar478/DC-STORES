@@ -152,7 +152,7 @@ exports.approveReturn = async (req, res) => {
         orderItem.returnRequest.status = 'Approved';
         
        
-        if (orderItem.productId) {
+        if (orderItem.productId&&!orderItem.returnRequest.isDamaged) {
             await Product.findByIdAndUpdate(orderItem.productId._id, {
                 $inc: { stock: orderItem.quantity }
             });

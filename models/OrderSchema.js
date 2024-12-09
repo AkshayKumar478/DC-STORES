@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema({
     userId: {
@@ -37,7 +38,8 @@ const orderSchema = new mongoose.Schema({
             default: 'Processing'
         },
         returnRequest: {
-            reason: String,
+            reason: {type:String},
+            isDamaged: { type: Boolean, default: false },
             status: {
                 type: String,
                 enum: ['Empty', 'Pending', 'Approved', 'Rejected'],

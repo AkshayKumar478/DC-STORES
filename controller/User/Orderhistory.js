@@ -124,7 +124,7 @@ exports.requestReturn=async(req,res)=>{
     try{
         const {orderId,itemId}=req.params
         const userId=req.session.user._id;
-        const {reason}=req.body;
+        const {reason,isDamaged}=req.body;
         const order = await Order.findOne({ _id: orderId, userId });
 
         if(!order){
@@ -148,7 +148,8 @@ exports.requestReturn=async(req,res)=>{
         }
         orderItem.status='Return Requested';
         orderItem.returnRequest={
-            reason,
+            reason: reason,
+            isDamaged: isDamaged,
             requestDate:new Date(),
             status:"Pending"
         }

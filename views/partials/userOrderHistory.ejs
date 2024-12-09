@@ -280,6 +280,12 @@
                     <label for="return-reason">Please explain why you want to return this item:</label>
                     <textarea id="return-reason" class="modal-textarea" 
                         placeholder="Enter your reason for return..."></textarea>
+                        <div class="mt-3">
+                        <input type="checkbox" id="is-damaged" class="form-check-input">
+                        <label for="is-damaged" class="form-check-label">
+                            The product is damaged
+                        </label>    
+                      <div>   
                 </div>
             `,
             showCancelButton: true,
@@ -287,26 +293,30 @@
             cancelButtonText: 'Cancel',
             preConfirm: () => {
                 const reason = document.getElementById('return-reason').value;
+                const isDamaged = document.getElementById('is-damaged').checked;
                 if (!reason.trim()) {
                     Swal.showValidationMessage('Please provide a reason for return');
                     return false;
                 }
-                return reason;
+                return { reason, isDamaged };
             }
         }).then((result) => {
             if (result.isConfirmed) {
-                submitReturnRequest(orderId, itemId, result.value);
+                submitReturnRequest(orderId, itemId, result.value.reason, result.value.isDamaged);
             }
         });
     }
 
-    function submitReturnRequest(orderId, itemId, reason) {
+    function submitReturnRequest(orderId, itemId, reason, isDamaged) {
         fetch(`/user/orders/${orderId}/items/${itemId}/return`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ reason })
+            body: JSON.stringify({
+                reason: typeof reason === 'object' ? reason.reason : reason,
+                isDamaged: isDamaged
+            })
         })
             .then(response => response.json())
             .then(data => {
@@ -366,7 +376,7 @@
 
                 // Handle Razorpay payment
                 const options = {
-                    key: data.RAZORPAY_KEY_ID, // Now getting from response
+                    key: data.RAZORPAY_KEY_ID,
                     amount: Math.round(amount * 100),
                     currency: 'INR',
                     name: 'Your Store Name',
