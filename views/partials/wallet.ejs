@@ -145,10 +145,8 @@
                                 <span class="transaction-description">
                                     <%= transaction.description %>
                                 </span>
-                                <span class="transaction-date">
-                                    <%= transaction.orderId.createdAt.toLocaleDateString('en-IN', { day: '2-digit' ,
-                                        month: 'short' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
-                                </span>
+                                <span class="transaction-date"
+                                    data-date="<%= transaction.createdAt.toISOString() %>"></span>
                             </div>
                             <div class="transaction-amount <%= transaction.type %>">
                                 <%= transaction.type==='Credit' ? '+' : '-' %>₹<%= transaction.amount %>
@@ -164,3 +162,28 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const timeZone = 'Asia/Kolkata';
+        const options = {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+        };
+
+
+        document.querySelectorAll('.transaction-date').forEach(element => {
+            const rawDate = element.getAttribute('data-date');
+            const formattedDate = new Intl.DateTimeFormat('en-IN', {
+                ...options,
+                timeZone,
+            }).format(new Date(rawDate));
+            element.textContent = formattedDate;
+        });
+    });
+</script>
