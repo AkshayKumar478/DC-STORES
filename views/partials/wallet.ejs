@@ -146,7 +146,7 @@
                                     <%= transaction.description %>
                                 </span>
                                 <span class="transaction-date">
-                                    <%= transaction.createdAt.toLocaleDateString('en-IN', { day: '2-digit' ,
+                                    <%= transaction.orderId.createdAt.toLocaleDateString('en-IN', { day: '2-digit' ,
                                         month: 'short' , year: 'numeric' , hour: '2-digit' , minute: '2-digit' }) %>
                                 </span>
                             </div>

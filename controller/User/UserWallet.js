@@ -1,6 +1,7 @@
 
 const User = require('../../models/userSchema');
 const WalletTransaction=require('../../models/walletSchema')
+const Order=require('../../models/OrderSchema')
 require("dotenv").config();
 
 // controller to render wallet page
@@ -10,6 +11,8 @@ exports.createWalletTransaction = async (userId, type, amount, description, orde
         if (!user) {
             throw new Error('User not found');
         }
+        const order=await Order.findById(orderId)
+
 
         let newBalance;
         if (type.toLowerCase() === 'credit') {
@@ -22,7 +25,6 @@ exports.createWalletTransaction = async (userId, type, amount, description, orde
         } else {
             throw new Error('Invalid transaction type');
         }
-
         const transaction = new WalletTransaction({
             userId,
             type: type.toLowerCase() === 'credit' ? 'Credit' : 'Debit',
@@ -55,7 +57,8 @@ exports.getWalletBalance = async (req, res) => {
 
         const transactions = await WalletTransaction.find({ userId })
             .sort({ createdAt: -1 })
-            .limit(10);
+            .limit(10)
+            .populate('orderId')
 
         res.render('profileLayout', {
             content: 'partials/wallet',
