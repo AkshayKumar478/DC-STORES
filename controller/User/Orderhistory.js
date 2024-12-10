@@ -12,7 +12,7 @@ require("dotenv").config();
 exports.getOrderHistory = async (req, res) => {
     try {
         const userId = req.session.user._id;
-        const user=User.findById(userId)
+        const user = await User.findById(userId);
         
         const orders = await Order.find({ userId })
             .populate({
@@ -20,7 +20,20 @@ exports.getOrderHistory = async (req, res) => {
                 select: 'productName images',
             })
             .sort({ createdAt: -1 });
-            
+
+       
+        orders.forEach(order => {
+            order.isReturnEligible = function() {
+                if (this.orderStatus !== 'Delivered') return false;
+                
+                const referenceDate = this.deliveryDate || this.createdAt;
+                const sevenDaysAgo = new Date();
+                sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+                
+                return new Date(referenceDate) > sevenDaysAgo;
+            };
+        });
+        
         res.render('profileLayout', {
             content: 'partials/userOrderHistory',
             title: 'Order History',
@@ -196,8 +209,8 @@ const generateInvoice = async (order, user) => {
     doc.rect(50, doc.y, 500, 100).stroke();
     const customerY = doc.y + 10;
     doc.text('Bill To:', 60, customerY);
-    doc.text(`Name: ${user.name}`, 60, customerY + 20);
-    doc.text(`Email: ${user.email}`, 60, customerY + 40);
+    doc.text(`Name: ${userId.name}`, 60, customerY + 20);
+    doc.text(`Email: ${userId.email}`, 60, customerY + 40);
     const address = order.shippingAddress;
     doc.text(`Address: ${address.location}, ${address.city}`, 60, customerY + 60);
     doc.text(`${address.state}, ${address.pinCode}`, 120, customerY + 80);

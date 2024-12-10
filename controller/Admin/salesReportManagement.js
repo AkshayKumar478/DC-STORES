@@ -155,7 +155,17 @@ exports.downloadSalesReportPDF = async (req, res) => {
             }
         }
 
-        const orders = await Order.find(query);
+        const orders = await Order.find(query)
+            .populate({
+                path: 'userId',
+                select: 'name email phone'
+            })
+            .populate({
+                path: 'items.productId',
+                select: 'productName category'
+            })
+            .populate('shippingAddress');
+
         let aggregatedOrders;
         let report;
 
@@ -179,25 +189,106 @@ exports.downloadSalesReportPDF = async (req, res) => {
                 break;
         }
 
-        const doc = new PDFDocument();
+        const doc = new PDFDocument({ margin: 30 });
         res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="sales_report.pdf"');
 
-        doc.text(`Sales Report ${startDate ? `from ${startDate}` : ''} ${endDate ? `to ${endDate}` : ''}`, { align: 'center' });
+        doc.fontSize(16).text('Sales Report', { align: 'center' });
+        doc.fontSize(10).text(`Report Period: ${startDate || 'Start'} to ${endDate || 'Present'}`, { align: 'center' });
         doc.moveDown();
-        doc.text(`Total Sales Count: ${report.totalSalesCount}`);
-        doc.text(`Total Order Amount: ${report.totalOrderAmount.toFixed(2)}`);
-        doc.text(`Total Discount: ${report.totalDiscount.toFixed(2)}`);
-        doc.text(`Net Sales: ${report.netSales.toFixed(2)}`);
-        doc.end();
 
+        doc.fontSize(12).text('Summary Statistics', { underline: true });
+        doc.text(`Total Sales Count: ${report.totalSalesCount}`);
+        doc.text(`Total Order Amount: $${(report.totalOrderAmount).toFixed(2)}`);
+        doc.text(`Total Discount: $${(report.totalDiscount).toFixed(2)}`);
+        doc.text(`Net Sales: $${(report.netSales).toFixed(2)}`);
+        doc.moveDown();
+
+        // Table Setup
+        const tableTop = doc.y;
+        const tableLeft = 30;
+        const cellPadding = 5;
+        const columnWidths = [80, 100, 160, 60, 60, 80];
+        const headers = [
+            'Date', 
+            'Customer', 
+            'Email', 
+            'Subtotal', 
+            'Discount', 
+            'Final Amount'
+        ];
+
+        doc.fontSize(10).font('Helvetica-Bold');
+        headers.forEach((header, i) => {
+            doc.text(header, tableLeft + columnWidths.slice(0, i).reduce((a, b) => a + b, 0) + cellPadding, tableTop, {
+                width: columnWidths[i] - (cellPadding * 2),
+                align: 'center'
+            });
+        });
+
+        doc.moveTo(tableLeft, tableTop + 15)
+           .lineTo(tableLeft + columnWidths.reduce((a, b) => a + b, 0), tableTop + 15)
+           .stroke();
+
+        doc.font('Helvetica');
+        let currentY = tableTop + 20;
+
+        aggregatedOrders.forEach((order, index) => {
+            if (currentY > doc.page.height - 100) {
+                doc.addPage();
+                currentY = 30;
+            }
+
+            const rowData = [
+                moment(order.createdAt).format('YYYY-MM-DD'),
+                order.userId?.name || 'N/A',
+                order.userId?.email || 'N/A',
+                `$${(order.subtotal || 0).toFixed(2)}`,
+                `$${(order.discountAmount || 0).toFixed(2)}`,
+                `$${(order.finalAmount || 0).toFixed(2)}`
+            ];
+
+            rowData.forEach((text, i) => {
+                doc.text(text, tableLeft + columnWidths.slice(0, i).reduce((a, b) => a + b, 0) + cellPadding, currentY, {
+                    width: columnWidths[i] - (cellPadding * 2),
+                    align: 'left'
+                });
+            });
+
+            currentY += 15;
+
+            if (order.items && order.items.length > 0) {
+                const productsText = order.items.map(item => 
+                    `${item.productId?.productName || 'Unknown'} (Qty: ${item.quantity})`
+                ).join(', ');
+                
+                doc.font('Helvetica-Oblique').fontSize(8);
+                doc.text(`Products: ${productsText}`, tableLeft + cellPadding, currentY, {
+                    width: columnWidths.reduce((a, b) => a + b, 0) - (cellPadding * 2),
+                });
+                doc.font('Helvetica').fontSize(10);
+                currentY += 10;
+            }
+
+            doc.moveTo(tableLeft, currentY)
+               .lineTo(tableLeft + columnWidths.reduce((a, b) => a + b, 0), currentY)
+               .lineWidth(0.5)
+               .strokeColor('#CCCCCC')
+               .stroke();
+            
+            currentY += 5;
+        });
+
+        doc.end();
         doc.pipe(res);
     } catch (error) {
         console.error('Error generating PDF:', error);
         res.status(500).send('Server Error');
     }
 };
-// controller to download to salesReport as Excel sheet
+
+
+// Updated Excel download controller with more details
 exports.downloadSalesReportExcel = async (req, res) => {
     try {
         const { startDate, endDate, reportType = 'daily' } = req.query;
@@ -222,7 +313,18 @@ exports.downloadSalesReportExcel = async (req, res) => {
             }
         }
 
-        const orders = await Order.find(query);
+     
+        const orders = await Order.find(query)
+            .populate({
+                path: 'userId',
+                select: 'name email phone'
+            })
+            .populate({
+                path: 'items.productId',
+                select: 'productName category'
+            })
+            .populate('shippingAddress');
+
         let aggregatedOrders;
         let report;
 
@@ -251,17 +353,33 @@ exports.downloadSalesReportExcel = async (req, res) => {
 
         sheet.columns = [
             { header: 'Date', key: 'date', width: 15 },
-            { header: 'Subtotal', key: 'subtotal', width: 15 },
-            { header: 'Discount', key: 'discount', width: 15 },
-            { header: 'Final Amount', key: 'finalAmount', width: 15 }
+            { header: 'Customer Name', key: 'customerName', width: 20 },
+            { header: 'Customer Email', key: 'customerEmail', width: 25 },
+            { header: 'Payment Method', key: 'paymentMethod', width: 15 },
+            { header: 'Order Status', key: 'orderStatus', width: 15 },
+            { header: 'Subtotal', key: 'subtotal', width: 10 },
+            { header: 'Discount', key: 'discount', width: 10 },
+            { header: 'Final Amount', key: 'finalAmount', width: 10 },
+            { header: 'Products', key: 'products', width: 40 }
         ];
 
         aggregatedOrders.forEach(order => {
+            const productsString = order.items 
+                ? order.items.map(item => 
+                    `${item.productId?.productName || 'Unknown'} (Qty: ${item.quantity}, Price: ${item.price})`
+                ).join('; ')
+                : 'N/A';
+
             sheet.addRow({
-                date: order.createdAt.toISOString().slice(0, 10),
+                date: moment(order.createdAt).format('YYYY-MM-DD'),
+                customerName: order.userId.name || 'N/A',
+                customerEmail: order.userId.email || 'N/A',
+                paymentMethod: order.paymentMethod || 'N/A',
+                orderStatus: order.orderStatus || 'N/A',
                 subtotal: order.subtotal,
                 discount: order.discountAmount,
-                finalAmount: order.finalAmount
+                finalAmount: order.finalAmount,
+                products: productsString
             });
         });
 
@@ -272,6 +390,9 @@ exports.downloadSalesReportExcel = async (req, res) => {
             discount: report.totalDiscount,
             finalAmount: report.netSales
         }).commit();
+
+        const totalRow = sheet.getRow(sheet.rowCount);
+        totalRow.font = { bold: true };
 
         res.setHeader(
             'Content-Disposition',

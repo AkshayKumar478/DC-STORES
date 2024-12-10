@@ -191,10 +191,11 @@
 
                                                             <div class="item-details">
 
-                                                                <% if (item.status==='Delivered' ) { %>
+                                                                <% if (item.status==='Delivered' &&
+                                                                    order.isReturnEligible()) { %>
                                                                     <button
                                                                         onclick="showReturnModal('<%= order._id %>', '<%= item._id %>')"
-                                                                        class="return-item-btn ">
+                                                                        class="return-item-btn">
                                                                         Return
                                                                     </button>
                                                                     <% } %>

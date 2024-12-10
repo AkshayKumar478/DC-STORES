@@ -18,6 +18,9 @@ const orderSchema = new mongoose.Schema({
     required:true,
     type:Number,
    },
+   deliveryDate: {
+    type: Date
+},
     items: [{
         productId: {
             type: mongoose.Schema.Types.ObjectId,
@@ -90,6 +93,17 @@ orderSchema.methods.recalculateTotal = function() {
     this.totalAmount = this.items.reduce((total, item) => {
         return item.status !== 'Cancelled' ? total + (item.price * item.quantity) : total;
     }, 0);
+};
+
+orderSchema.methods.isReturnEligible = function() {
+    if (this.orderStatus !== 'Delivered') return false;
+    
+    const referenceDate = this.deliveryDate || this.createdAt;
+    
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+    return new Date(referenceDate) > sevenDaysAgo;
 };
 
 const Order = mongoose.model('Order', orderSchema);
