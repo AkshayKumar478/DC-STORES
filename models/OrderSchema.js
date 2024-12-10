@@ -11,8 +11,6 @@ const orderSchema = new mongoose.Schema({
         code: String,
         discountType: String,
         discountValue: Number,
-        
-    
     },
     deliveryFee:{
     required:true,

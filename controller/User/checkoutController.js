@@ -185,7 +185,7 @@ exports.createOrder = async (req, res) => {
                 userId: order.userId._id,
                 type: 'Debit',
                 amount: finalAmount,
-                description: `Refund for returned item from Order ${order._id}`,
+                description: `Purchased  Order ${order._id}`,
                 orderId: order._id
             });
             await walletTransaction.save();
