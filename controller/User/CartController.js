@@ -308,7 +308,6 @@ exports.clearCart = async (req, res) => {
 
 exports.getCartCount = async (req, res) => {
     try {
-        console.log('Session user:', req.session.user);
 
         if (!req.session.user) {
             return res.json({ success: true, cartCount: 0 });
@@ -317,7 +316,6 @@ exports.getCartCount = async (req, res) => {
         const cart = await Cart.findOne({ userId: req.session.user._id });
         const cartCount = cart ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
 
-        console.log('Cart count for user:', cartCount);
 
         res.json({ 
             success: true, 
