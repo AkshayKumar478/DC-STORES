@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
+    <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -23,10 +24,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
+        /*logo */
         .logo {
             display: block;
             margin: 0 auto 20px auto;
             width: 80px;
+
         }
 
         .login-container h1 {
@@ -36,6 +39,7 @@
 
         .form-group {
             margin-bottom: 20px;
+            /* Space between form fields */
         }
 
         .loginBtn {
@@ -65,10 +69,12 @@
             height: 35px;
             font-size: 14px;
             margin-top: 10px;
+            /* Space between login button and Google button */
         }
 
         .google-login-btn img {
             width: 20px;
+            /* Decreased size of Google logo */
         }
     </style>
 </head>
@@ -76,7 +82,7 @@
 <body>
 
     <div class="login-container">
-        <img class="logo" src="/images/adminLogo.svg" alt="AdminLogo">
+        <img class="logo" src="/images/AdminLogo.png" alt="AdminLogo">
         <form method="POST" action="/admin/login">
             <% if (error_msg) { %>
                 <div class="alert" style="color: red;">
@@ -93,6 +99,7 @@
                     </div>
                     <button type="submit" class="loginBtn">Login</button>
 
+                    <!-- Forgot Password and Signup Links -->
                     <div class="text-center mt-3">
                         <a href="#">Forgot password?</a>
                         <br>

@@ -10,14 +10,16 @@ const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
 //controller to render product management page
 exports.getProducts=async(req,res)=>{
     try{
-        const products=await Product.find({});
+        const products=await Product.find({}).sort({ _id: -1 });
         if (!products || products.length === 0) {
             req.flash('error_msg', 'No products found.');            
         }
         res.render('adminLayout',{
             title:"Products",
             content:'partials/adminProductList',
-            products
+            products,
+            success_msg: req.flash('success_msg'),
+            error_msg: req.flash('error_msg')
         }) 
     }catch(error){
         console.error('Error Fetching products',error)

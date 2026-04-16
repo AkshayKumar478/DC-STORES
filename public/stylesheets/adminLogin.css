@@ -16,6 +16,12 @@ body {
     color: white;
 }
 
+.navbar-brand img {
+    display: block;
+    width: 64px;
+    height: 64px;
+}
+
 .login-container {
     background-color: #fff;
     padding: 40px;

@@ -1,9 +1,14 @@
 <link rel="stylesheet" href="/stylesheets/adminOrders.css">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.css" rel="stylesheet">
 
-<div class="content">
-    <div class="container">
-        <div class="header">
+<div class="content orders-page">
+    <div class="admin-page">
+        <div class="admin-page-header">
+            <div>
+                <p class="admin-page-header__eyebrow">Orders</p>
+                <h1>Manage Orders</h1>
+                <p class="admin-page-subtitle">Review payments, update statuses, and handle return requests from one place.</p>
+            </div>
             <span class="total-orders">Total Orders: <%= orders.length %></span>
         </div>
         <div class="table-container">
@@ -119,67 +124,6 @@
         </div>
     </div>
 </div>
-
-<style>
-    .item-status-control {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-top: 5px;
-    }
-
-    .item-status-select {
-        padding: 4px;
-        border-radius: 4px;
-        border: 1px solid #ddd;
-    }
-
-    .status-badge {
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 0.8em;
-        font-weight: 500;
-    }
-
-    .status-processing {
-        background-color: #fef3c7;
-        color: #92400e;
-    }
-
-    .status-shipped {
-        background-color: #dbeafe;
-        color: #1e40af;
-    }
-
-    .status-delivered {
-        background-color: #d1fae5;
-        color: #065f46;
-    }
-
-    .status-cancelled {
-        background-color: #fee2e2;
-        color: #991b1b;
-    }
-
-    .status-returned {
-        background-color: #f3e8ff;
-        color: #6b21a8;
-    }
-
-    .item-row {
-        padding: 8px 0;
-        border-bottom: 1px solid #eee;
-    }
-
-    .item-row:last-child {
-        border-bottom: none;
-    }
-
-    .item-details {
-        display: flex;
-        flex-direction: column;
-    }
-</style>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.js"></script>
 <script>

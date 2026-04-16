@@ -1,0 +1,14 @@
+.coupons-page .admin-table td:last-child {
+    min-width: 180px;
+}
+
+.coupon-code {
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.coupon-action-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}

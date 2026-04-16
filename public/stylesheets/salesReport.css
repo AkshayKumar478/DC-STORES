@@ -1,0 +1,64 @@
+.sales-report-page .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 16px;
+    margin: 24px 0;
+}
+
+.sales-report-page .summary-card {
+    padding: 20px;
+}
+
+.sales-report-page .summary-card .label {
+    margin-bottom: 10px;
+    color: var(--admin-text-soft);
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.sales-report-page .summary-card p {
+    margin: 0;
+    color: var(--admin-text);
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.sales-report-page .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.sales-report-page .download-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 16px;
+    border: 1px solid var(--admin-border);
+    border-radius: 14px;
+    background: #ffffff;
+    color: var(--admin-text);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.sales-report-page .download-link:hover {
+    background: #fff7ea;
+    color: var(--admin-text);
+    text-decoration: none;
+}
+
+@media (max-width: 992px) {
+    .sales-report-page .summary-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .sales-report-page .summary-grid {
+        grid-template-columns: 1fr;
+    }
+}

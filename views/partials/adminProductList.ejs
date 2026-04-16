@@ -4,16 +4,23 @@
 <link rel="stylesheet" href="/stylesheets/adminProductList.css">
 <div class="main-content">
 
-    <div class="container mt-5">
-        <div class="text-center mt-4">
-            <a href="/admin/products/add" class="add-product-btn btn-success" style="text-decoration: none;">
+    <div class="container product-management-container">
+        <input type="hidden" id="productSuccessMsg" value="<%= Array.isArray(success_msg) ? success_msg.join(' ') : (success_msg || '') %>">
+        <input type="hidden" id="productErrorMsg" value="<%= Array.isArray(error_msg) ? error_msg.join(' ') : (error_msg || '') %>">
+
+        <div class="product-page-header">
+            <div>
+                <p class="page-kicker">Inventory</p>
+                <h1>Manage Products</h1>
+            </div>
+            <a href="/admin/products/add" class="add-product-btn btn-success">
                 <i class="fa fa-plus"></i> Add Product
             </a>
         </div>
-        <br>
 
-        <table class="table table-bordered table-dark table-striped">
-            <thead class="thead-light">
+        <div class="products-table-card">
+        <table class="table products-table">
+            <thead>
                 <tr>
                     <th>Product Name</th>
                     <th>Variant</th>
@@ -28,31 +35,30 @@
                 <% if (Array.isArray(products) && products.length> 0) { %>
                     <% products.forEach(function(product) { %>
                         <tr>
-                            <td>
+                            <td data-label="Product Name" class="product-name-cell">
                                 <%= product.productName %>
                             </td>
-                            <td>
+                            <td data-label="Variant">
                                 <%= product.variant %>
                             </td>
-                            <td>₹<%= product.price %>
+                            <td data-label="Price">₹<%= product.price %>
                             </td>
-                            <td>
+                            <td data-label="Stock">
                                 <%= product.stock %>
                             </td>
-                            <td class="imageContainer">
+                            <td data-label="Images" class="imageContainer">
                                 <% product.images.forEach(function(image) { %>
-                                    <img src="<%= image %>" alt="<%= product.productName %>"
-                                        style="width: 100px; margin: 5px;">
+                                    <img src="<%= image %>" alt="<%= product.productName %>">
                                     <% }) %>
                             </td>
-                            <td>
+                            <td data-label="Status">
                                 <% if (product.status==='listed' ) { %>
                                     <span class="badge bg-success">Listed</span>
                                     <% } else { %>
                                         <span class="badge bg-danger">Unlisted</span>
                                         <% } %>
                             </td>
-                            <td>
+                            <td data-label="Actions">
                                 <div class="btnContainer">
                                     <!-- product Delete -->
                                     <form action="/admin/products/delete/<%= product._id %>" method="POST"
@@ -81,11 +87,12 @@
                         <% }); %>
                             <% } else { %>
                                 <tr>
-                                    <td colspan="7">No products found.</td>
+                                    <td colspan="7" class="empty-products">No products found.</td>
                                 </tr>
                                 <% } %>
             </tbody>
         </table>
+        </div>
 
 
     </div>
@@ -106,6 +113,36 @@
 </style>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const successMsg = document.getElementById('productSuccessMsg')?.value;
+        const errorMsg = document.getElementById('productErrorMsg')?.value;
+
+        if (successMsg) {
+            Swal.fire({
+                title: 'Success!',
+                text: successMsg,
+                icon: 'success',
+                confirmButtonColor: '#4CAF50',
+                background: '#F4F3F2',
+                color: '#000000',
+                customClass: {
+                    title: 'success'
+                }
+            });
+        }
+
+        if (errorMsg) {
+            Swal.fire({
+                title: 'Error!',
+                text: errorMsg,
+                icon: 'error',
+                confirmButtonColor: '#f44336',
+                background: '#F4F3F2',
+                color: '#000000'
+            });
+        }
+    });
+
     function toggleProductStatus(productId, currentStatus) {
         const action = currentStatus === 'listed' ? 'unlist' : 'list';
         const capitalizedAction = action.charAt(0).toUpperCase() + action.slice(1);

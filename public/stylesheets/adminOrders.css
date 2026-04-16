@@ -1,260 +1,182 @@
-* {
-    margin: 0;
+.orders-page .header {
+    margin-bottom: 20px;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: none;
 }
 
-body {
-    background-color: #f5f5f5;
-
+.orders-page .total-orders {
+    background: #fff2dc;
+    color: var(--admin-accent-dark);
+    font-weight: 800;
 }
 
-.content {
-    margin-left: 3%;
-    width: 100%;
-    margin-bottom: 7vh;
-    margin-top: 4vh;
-    height: 100vh;
+.orders-page .table-container {
+    overflow: auto;
+    border: 1px solid var(--admin-border);
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: var(--admin-shadow);
 }
 
-.container {
-    height: 90vh;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+.orders-page table {
+    min-width: 1180px;
 }
 
-.header {
-    padding: 1.5rem;
-    border-bottom: 1px solid #e5e7eb;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.header h1 {
-    font-size: 1.5rem;
-    color: #111827;
-}
-
-.total-orders {
-    background: #f3f4f6;
-    padding: 0.5rem 1rem;
-    border-radius: 9999px;
-    font-size: 0.875rem;
-    color: #374151;
-}
-
-.table-container {
-    overflow-x: auto;
-    height: calc(85vh - 5rem);
-
-
-    /* Subtract header height */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-
-}
-
-th {
+.orders-page th {
     position: sticky;
     top: 0;
-    background-color: #f9fafb;
-    padding: 1rem;
-    text-align: left;
-    font-weight: 600;
-    color: #374151;
-    font-size: 0.875rem;
-    z-index: 1;
+    padding: 16px 18px;
+    background: var(--admin-text);
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    z-index: 2;
 }
 
-td {
-    padding: 1rem;
-    border-bottom: 1px solid #e5e7eb;
-    font-size: 0.875rem;
-    color: #4b5563;
+.orders-page td {
+    padding: 18px;
+    border-bottom: 1px solid var(--admin-border);
+    color: var(--admin-text);
+    background: #ffffff;
+    vertical-align: top;
 }
 
-tr:hover {
-    background-color: #f9fafb;
+.orders-page tr:nth-child(even) td {
+    background: var(--admin-surface-muted);
 }
 
-.customer-info {
+.orders-page tr:hover td {
+    background: #fff8ed;
+}
+
+.customer-info,
+.payment-info,
+.item-details {
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 6px;
 }
 
-.customer-name {
-    font-weight: 500;
-    color: #111827;
+.customer-name,
+.total-amount,
+.item-name {
+    color: var(--admin-text);
+    font-weight: 700;
 }
 
-.customer-email {
-    color: #6b7280;
-    font-size: 0.875rem;
+.customer-email,
+.payment-method,
+.payment-status {
+    color: var(--admin-text-soft);
+}
+
+.item-list {
+    display: grid;
+    gap: 12px;
+}
+
+.item-row {
+    padding: 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.75);
+}
+
+.item-status-control {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.item-status-select,
+.status-select {
+    min-height: 42px;
+    padding: 8px 12px;
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--admin-text);
+}
+
+.status-form {
+    display: grid;
+    gap: 10px;
+}
+
+.action-cell {
+    min-width: 190px;
+}
+
+.btn-update,
+.btn-return-action {
+    margin: 0;
+    padding: 10px 14px;
+    border-radius: 12px;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+.btn-update {
+    background: rgb(255, 166, 0);
+}
+
+.btn-update:hover {
+    background: rgb(184, 119, 0);
+    color: white;
+}
+
+.btn-return-action {
+    background: var(--admin-info);
 }
 
 .status-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-weight: 500;
-    font-size: 0.875rem;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 800;
 }
 
-.status-Processing {
-    background-color: #fef3c7;
-    color: #92400e;
+.status-processing {
+    background-color: #fff0cc;
+    color: #9a6400;
 }
 
-.status-Shipped {
+.status-shipped {
     background-color: #dbeafe;
     color: #1e40af;
 }
 
-.status-Delivered {
-    background-color: #d1fae5;
-    color: #065f46;
+.status-delivered {
+    background-color: #dff6e5;
+    color: #19653a;
 }
 
-.status-Cancelled {
+.status-cancelled {
     background-color: #fee2e2;
-    color: #991b1b;
+    color: #a12626;
 }
 
-.status-Returned {
-    background-color: #f3f4f6;
-    color: #374151;
-}
-
-.action-cell {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.status-select {
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid #d1d5db;
-    width: 100%;
-    font-size: 0.875rem;
-    color: #374151;
-    background-color: white;
-}
-
-.btn {
-    padding: 0.5rem 1rem;
-    border-radius: 6px;
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: background-color 0.2s;
-    margin: 30px;
-    width: max-content;
-}
-
-.btn-update {
-    background-color: #3b82f6;
-    color: white;
-}
-
-.btn-update:hover {
-    background-color: #2563eb;
-}
-
-.btn-cancel {
-    background-color: #ef4444;
-    color: white;
-}
-
-.btn-cancel:hover {
-    background-color: #dc2626;
-}
-
-.item-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.item-row {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.payment-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.total-amount {
-    font-weight: 500;
-    color: #111827;
-}
-
-.payment-method {
-    color: #6b7280;
-    font-size: 0.875rem;
-}
-
-/* Custom scrollbar styles */
-.table-container::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-
-.table-container::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 3px;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-    background: #555;
+.status-returned {
+    background-color: #ede9fe;
+    color: #6d28d9;
 }
 
 .status-return-requested {
-    background-color: #ffe4e6;
-    color: #9f1239;
-}
-
-.btn-return-action {
-    padding: 4px 8px;
-    border-radius: 4px;
-    background-color: #3b82f6;
-    color: white;
-    border: none;
-    cursor: pointer;
-    font-size: 0.8em;
-}
-
-.btn-return-action:hover {
-    background-color: #2563eb;
+    background-color: #ffe7d1;
+    color: #b45309;
 }
 
 .return-reason {
-    margin-top: 10px;
-    padding: 8px;
-    background-color: #f3f4f6;
-    border-radius: 4px;
-    font-size: 0.9em;
-}
-
-.return-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 15px;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 12px;
+    background: #faf7f3;
+    color: var(--admin-text);
 }

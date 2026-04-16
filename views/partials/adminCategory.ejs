@@ -1,67 +1,73 @@
 <link rel="stylesheet" href="/stylesheets/adminCategory.css">
-<div class="main-content">
-
-
-    <!-- Button to Open Modal -->
-    <button type="button" class="AddCategory" data-toggle="modal" data-target="#addCategoryModal">
-        Add New Category
-    </button>
-
-    <!-- Flash message for error -->
-    <% if (error) { %>
-        <div class="alert" style="color: red;">
-            <%= error_msg %>
+<div class="main-content category-page">
+    <div class="admin-page">
+        <div class="admin-page-header">
+            <div>
+                <p class="admin-page-header__eyebrow">Categories</p>
+                <h1>Manage Categories</h1>
+                <p class="admin-page-subtitle">Keep product groups organized with better visibility and cleaner controls.</p>
+            </div>
+            <button type="button" class="AddCategory" data-toggle="modal" data-target="#addCategoryModal">
+                Add New Category
+            </button>
         </div>
+
+        <% if (error_msg && error_msg.length) { %>
+            <div class="alert alert-danger">
+                <%= error_msg %>
+            </div>
         <% } %>
 
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Category Name</th>
-                        <th>Image</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% categories.forEach(category=> { %>
+        <div class="admin-table-card">
+            <div class="admin-table-wrap">
+                <table class="table admin-table">
+                    <thead>
                         <tr>
-                            <td>
-                                <%= category.name %>
-                            </td>
-                            <td>
-                                <img src="/uploads/<%= category.image %>" alt="Category Image" width="50">
-                            </td>
-                            <td>
-                                <% if (category.isListed) { %>
-                                    <span class="badge badge-success">Listed</span>
+                            <th>Category Name</th>
+                            <th>Image</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% categories.forEach(category=> { %>
+                            <tr>
+                                <td><strong><%= category.name %></strong></td>
+                                <td>
+                                    <img src="/uploads/<%= category.image %>" alt="Category Image" class="category-image">
+                                </td>
+                                <td>
+                                    <% if (category.isListed) { %>
+                                        <span class="badge badge-success">Listed</span>
                                     <% } else { %>
                                         <span class="badge badge-danger">Unlisted</span>
-                                        <% } %>
-                            </td>
-                            <td>
-                                <div class="row">
-                                    <% if (category.isListed) { %>
-                                        <form action="/admin/categories/<%= category._id %>/unlist" method="POST">
-                                            <button type="submit" class="btn btn-warning">Unlist</button>
-                                        </form>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <div class="category-actions">
+                                        <% if (category.isListed) { %>
+                                            <form action="/admin/categories/<%= category._id %>/unlist" method="POST">
+                                                <button type="submit" class="btn btn-warning">Unlist</button>
+                                            </form>
                                         <% } else { %>
                                             <form action="/admin/categories/<%= category._id %>/list" method="POST">
                                                 <button type="submit" class="btn btn-success">List</button>
                                             </form>
-                                            <% } %>
-                                                <a href="/admin/categories/<%= category._id %>/edit"
-                                                    class="btn btn-info">Edit</a>
-                                </div>
-                            </td>
-                        </tr>
+                                        <% } %>
+                                        <a href="/admin/categories/<%= category._id %>/edit" class="btn btn-info">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
                         <% }) %>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Modal for adding a category -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel"
+<div class="modal fade admin-modal" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">

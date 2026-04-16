@@ -1,0 +1,30 @@
+.offers-page .message {
+    border-radius: 14px;
+    border: none;
+}
+
+.offers-page .success {
+    background: #dff6e5;
+    color: #19653a;
+}
+
+.offers-page .error {
+    background: #fee2e2;
+    color: #a12626;
+}
+
+.offer-form {
+    display: none;
+}
+
+.active-form {
+    display: block;
+}
+
+.offer-form-card + .offer-form-card {
+    margin-top: 24px;
+}
+
+.offers-page .table td:last-child {
+    min-width: 210px;
+}
