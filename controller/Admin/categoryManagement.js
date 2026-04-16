@@ -22,7 +22,7 @@ exports.getCategories = async (req, res) => {
 //controller to fetch categories for editing and Adding products
 exports.getCategoriesJson = async (req, res) => {
     try {
-        const categories = await Category.find();
+        const categories = await Category.find({ isListed: true });
         res.json(categories);  
     } catch (err) {
         res.status(500).json({ message: 'Server Error' });

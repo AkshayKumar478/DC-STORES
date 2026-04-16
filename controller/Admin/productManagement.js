@@ -1,9 +1,11 @@
 const Product = require('../../models/productSchema');
+const Category = require('../../models/categorySchema');
 const path = require('path');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
 
 const fs = require('fs').promises;
+const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
 
 //controller to render product management page
 exports.getProducts=async(req,res)=>{
@@ -33,6 +35,11 @@ exports.postAddProduct = async (req, res) => {
     try {
         const { productName,description, variant, stock, price, category } = req.body;
         const imagePaths = [];
+        const selectedCategory = await Category.findById(category);
+
+        if (!selectedCategory || !selectedCategory.isListed) {
+            throw new Error('Please select a listed category.');
+        }
 
        
         for (let i = 1; i <= 3; i++) {
@@ -62,7 +69,8 @@ exports.postAddProduct = async (req, res) => {
 
           
             const filename = `${uuidv4()}.jpg`;
-            const filepath = path.join(__dirname, '..', 'public', 'uploads', filename);
+            await fs.mkdir(uploadDir, { recursive: true });
+            const filepath = path.join(uploadDir, filename);
             await fs.writeFile(filepath, processedImageBuffer);
 
             imagePaths.push(`/uploads/${filename}`);
@@ -75,7 +83,8 @@ exports.postAddProduct = async (req, res) => {
             variant,
             stock,
             price,
-            category
+            category,
+            status: 'listed'
         });
 
         await product.save();
@@ -179,7 +188,8 @@ exports.postEditProduct = async (req, res) => {
                     .toBuffer();
 
                 const filename = `${uuidv4()}.jpg`;
-                const filepath = path.join(__dirname, '..', 'public', 'uploads', filename);
+                await fs.mkdir(uploadDir, { recursive: true });
+                const filepath = path.join(uploadDir, filename);
                 await fs.writeFile(filepath, processedImageBuffer);
                 
                 updatedImages.push(`/uploads/${filename}`);

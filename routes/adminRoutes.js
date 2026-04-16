@@ -38,11 +38,11 @@ router.post('/admin/users/block/:id',userManagementController.postBlockUser)
 //====================== Product Management ===================================================//
 router.get('/admin/products',redirectAdminLoginIfLogout,productController.getProducts)
 router.get('/admin/products/add',redirectAdminLoginIfLogout,productController.getAddProducts)
-router.post('/admin/products/add', upload.array('images', 3), productController.postAddProduct);
+router.post('/admin/products/add', upload.none(), productController.postAddProduct);
 router.post('/admin/products/delete/:id',productController.postDeleteProduct)
 router.post('/admin/products/toggle/:id',productController.postToggleProductStatus)
 router.get('/admin/products/edit/:id', redirectAdminLoginIfLogout, productController.getEditProduct); 
-router.post('/admin/products/edit/:id', upload.array('images', 3), productController.postEditProduct);
+router.post('/admin/products/edit/:id', upload.none(), productController.postEditProduct);
 
 
 //===================== category Management ================================================// 
