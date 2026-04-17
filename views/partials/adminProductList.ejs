@@ -5,9 +5,6 @@
 <div class="main-content">
 
     <div class="container product-management-container">
-        <input type="hidden" id="productSuccessMsg" value="<%= Array.isArray(success_msg) ? success_msg.join(' ') : (success_msg || '') %>">
-        <input type="hidden" id="productErrorMsg" value="<%= Array.isArray(error_msg) ? error_msg.join(' ') : (error_msg || '') %>">
-
         <div class="product-page-header">
             <div>
                 <p class="page-kicker">Inventory</p>
@@ -19,79 +16,79 @@
         </div>
 
         <div class="products-table-card">
-        <table class="table products-table">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Variant</th>
-                    <th>Price </th>
-                    <th>Stock</th>
-                    <th>Images</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if (Array.isArray(products) && products.length> 0) { %>
-                    <% products.forEach(function(product) { %>
-                        <tr>
-                            <td data-label="Product Name" class="product-name-cell">
-                                <%= product.productName %>
-                            </td>
-                            <td data-label="Variant">
-                                <%= product.variant %>
-                            </td>
-                            <td data-label="Price">₹<%= product.price %>
-                            </td>
-                            <td data-label="Stock">
-                                <%= product.stock %>
-                            </td>
-                            <td data-label="Images" class="imageContainer">
-                                <% product.images.forEach(function(image) { %>
-                                    <img src="<%= image %>" alt="<%= product.productName %>">
-                                    <% }) %>
-                            </td>
-                            <td data-label="Status">
-                                <% if (product.status==='listed' ) { %>
-                                    <span class="badge bg-success">Listed</span>
-                                    <% } else { %>
-                                        <span class="badge bg-danger">Unlisted</span>
-                                        <% } %>
-                            </td>
-                            <td data-label="Actions">
-                                <div class="btnContainer">
-                                    <!-- product Delete -->
-                                    <form action="/admin/products/delete/<%= product._id %>" method="POST"
-                                        style="display:inline;"
-                                        onsubmit="return confirm('Are you sure you want to delete this product?');">
-                                        <button class="btn btn-danger">Delete</button>
-                                    </form>
-                                    <!-- product List & Unlist -->
-                                    <form action="#"
-                                        onsubmit="event.preventDefault(); toggleProductStatus('<%= product._id %>', '<%= product.status %>');"
-                                        style="display:inline;">
-                                        <button type="submit"
-                                            class="btn <%= product.status === 'listed' ? 'btn-warning' : 'btn-success' %>">
-                                            <%= product.status==='listed' ? 'Unlist' : 'List' %>
-                                        </button>
-                                    </form>
+            <table class="table products-table">
+                <thead>
+                    <tr>
+                        <th>Product Name</th>
+                        <th>Variant</th>
+                        <th>Price </th>
+                        <th>Stock</th>
+                        <th>Images</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (Array.isArray(products) && products.length> 0) { %>
+                        <% products.forEach(function(product) { %>
+                            <tr>
+                                <td data-label="Product Name" class="product-name-cell">
+                                    <%= product.productName %>
+                                </td>
+                                <td data-label="Variant">
+                                    <%= product.variant %>
+                                </td>
+                                <td data-label="Price">₹<%= product.price %>
+                                </td>
+                                <td data-label="Stock">
+                                    <%= product.stock %>
+                                </td>
+                                <td data-label="Images" class="imageContainer">
+                                    <% product.images.forEach(function(image) { %>
+                                        <img src="<%= image %>" alt="<%= product.productName %>">
+                                        <% }) %>
+                                </td>
+                                <td data-label="Status">
+                                    <% if (product.status==='listed' ) { %>
+                                        <span class="badge bg-success">Listed</span>
+                                        <% } else { %>
+                                            <span class="badge bg-danger">Unlisted</span>
+                                            <% } %>
+                                </td>
+                                <td data-label="Actions">
+                                    <div class="btnContainer">
+                                        <!-- product Delete -->
+                                        <form action="/admin/products/delete/<%= product._id %>" method="POST"
+                                            style="display:inline;"
+                                            onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                            <button class="btn btn-danger">Delete</button>
+                                        </form>
+                                        <!-- product List & Unlist -->
+                                        <form action="#"
+                                            onsubmit="event.preventDefault(); toggleProductStatus('<%= product._id %>', '<%= product.status %>');"
+                                            style="display:inline;">
+                                            <button type="submit"
+                                                class="btn <%= product.status === 'listed' ? 'btn-warning' : 'btn-success' %>">
+                                                <%= product.status==='listed' ? 'Unlist' : 'List' %>
+                                            </button>
+                                        </form>
 
-                                    <!-- product edit -->
-                                    <a href="/admin/products/edit/<%= product._id %>" class="btn btn-primary"
-                                        style="display:inline;">
-                                        Edit
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-                        <% }); %>
-                            <% } else { %>
-                                <tr>
-                                    <td colspan="7" class="empty-products">No products found.</td>
-                                </tr>
-                                <% } %>
-            </tbody>
-        </table>
+                                        <!-- product edit -->
+                                        <a href="/admin/products/edit/<%= product._id %>" class="btn btn-primary"
+                                            style="display:inline;">
+                                            Edit
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <% }); %>
+                                <% } else { %>
+                                    <tr>
+                                        <td colspan="7" class="empty-products">No products found.</td>
+                                    </tr>
+                                    <% } %>
+                </tbody>
+            </table>
         </div>
 
 
@@ -113,33 +110,52 @@
 </style>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const successMsg = document.getElementById('productSuccessMsg')?.value;
-        const errorMsg = document.getElementById('productErrorMsg')?.value;
+    window.addEventListener('load', function () {
+        const flashSuccessMsg = <%- JSON.stringify(success_msg || '') %>;
+        const flashErrorMsg = <%- JSON.stringify(error_msg || '') %>;
+        const urlParams = new URLSearchParams(window.location.search);
+        const successMsg = urlParams.get('success') || flashSuccessMsg;
+        const errorMsg = urlParams.get('error') || flashErrorMsg;
+        const clearQueryParams = () => {
+            if (urlParams.get('success') || urlParams.get('error')) {
+                const cleanUrl = `${window.location.pathname}${window.location.hash || ''}`;
+                window.history.replaceState({}, document.title, cleanUrl);
+            }
+        };
 
         if (successMsg) {
-            Swal.fire({
-                title: 'Success!',
-                text: successMsg,
-                icon: 'success',
-                confirmButtonColor: '#4CAF50',
-                background: '#F4F3F2',
-                color: '#000000',
-                customClass: {
-                    title: 'success'
-                }
-            });
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Success!',
+                    text: successMsg,
+                    icon: 'success',
+                    confirmButtonColor: '#4CAF50',
+                    background: '#F4F3F2',
+                    color: '#000000',
+                    customClass: {
+                        title: 'success'
+                    }
+                }).then(() => clearQueryParams());
+            } else {
+                alert(successMsg);
+                clearQueryParams();
+            }
         }
 
-        if (errorMsg) {
-            Swal.fire({
-                title: 'Error!',
-                text: errorMsg,
-                icon: 'error',
-                confirmButtonColor: '#f44336',
-                background: '#F4F3F2',
-                color: '#000000'
-            });
+        if (!successMsg && errorMsg) {
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: 'Error!',
+                    text: errorMsg,
+                    icon: 'error',
+                    confirmButtonColor: '#f44336',
+                    background: '#F4F3F2',
+                    color: '#000000'
+                }).then(() => clearQueryParams());
+            } else {
+                alert(errorMsg);
+                clearQueryParams();
+            }
         }
     });
 

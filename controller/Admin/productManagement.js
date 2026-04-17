@@ -11,15 +11,19 @@ const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
 exports.getProducts=async(req,res)=>{
     try{
         const products=await Product.find({}).sort({ _id: -1 });
+        const successMessages = req.flash('success_msg');
+        const errorMessages = req.flash('error_msg');
+
         if (!products || products.length === 0) {
-            req.flash('error_msg', 'No products found.');            
+            errorMessages.push('No products found.');
         }
+
         res.render('adminLayout',{
             title:"Products",
             content:'partials/adminProductList',
             products,
-            success_msg: req.flash('success_msg'),
-            error_msg: req.flash('error_msg')
+            success_msg: successMessages.join(' '),
+            error_msg: errorMessages.join(' ')
         }) 
     }catch(error){
         console.error('Error Fetching products',error)
@@ -91,7 +95,7 @@ exports.postAddProduct = async (req, res) => {
 
         await product.save();
         req.flash('success_msg', 'Product added successfully!');
-        res.redirect('/admin/products');
+        res.redirect(`/admin/products?success=${encodeURIComponent('Product added successfully!')}`);
     } catch (err) {
         console.error('Error adding product:', err.message); 
         req.flash('error_msg', 'Error adding product: ' + err.message); 
@@ -217,11 +221,11 @@ exports.postEditProduct = async (req, res) => {
         });
 
         req.flash('success_msg', 'Product updated successfully!');
-        res.redirect('/admin/products');
+        res.redirect(`/admin/products?success=${encodeURIComponent('Product updated successfully!')}`);
     } catch (error) {
         console.error('Error updating product:', error);
         req.flash('error_msg', 'Error updating product.');
-        res.redirect('/admin/products');
+        res.redirect(`/admin/products?error=${encodeURIComponent('Error updating product.')}`);
     }
 };
 

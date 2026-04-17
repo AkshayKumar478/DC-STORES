@@ -121,11 +121,14 @@
     align-items: center !important;
     justify-content: flex-end !important;
     gap: 8px;
-    min-width: 250px;
+    min-width: 0;
+    width: fit-content;
+    margin-left: auto;
 }
 
 .btnContainer form {
     margin: 0;
+    display: inline-flex;
 }
 
 .btn {
