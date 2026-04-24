@@ -2,6 +2,7 @@ const User=require('../../models/userSchema')
 const Product = require('../../models/productSchema');
 const Order=require('../../models/OrderSchema')
 const WalletTransaction=require('../../models/walletSchema')
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 
 
@@ -10,10 +11,16 @@ const WalletTransaction=require('../../models/walletSchema')
 // controller to render Order management page
 exports.orderManagement = async (req, res) => {
     try {
+        const page = normalizePage(req.query.page);
+        const limit = DEFAULT_PAGE_SIZE;
+        const totalOrders = await Order.countDocuments();
+        const pagination = buildPagination(page, limit, totalOrders);
         const orders = await Order.find()
             .populate('userId', 'name email')
             .populate('items.productId', 'productName')
-            .sort({ createdAt: -1 });
+            .sort({ createdAt: -1 })
+            .skip((pagination.currentPage - 1) * limit)
+            .limit(limit);
         
         const modifiedOrders = orders.map(order => ({
             ...order.toObject(),
@@ -24,6 +31,8 @@ exports.orderManagement = async (req, res) => {
             content: 'partials/adminOrders',
             title: 'Order Management',
             orders: modifiedOrders,
+            pagination,
+            totalOrders,
             messages: req.flash()
         });
     } catch (error) {

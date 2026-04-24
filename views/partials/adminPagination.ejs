@@ -1,0 +1,39 @@
+<% if (pagination) { %>
+    <%
+        const query = pagination.query || {};
+        const buildPageUrl = (targetPage) => {
+            const params = new URLSearchParams();
+            Object.keys(query).forEach((key) => {
+                if (query[key] !== undefined && query[key] !== null && query[key] !== '') {
+                    params.set(key, query[key]);
+                }
+            });
+            params.set('page', targetPage);
+            return `${basePath || ''}?${params.toString()}`;
+        };
+    %>
+    <nav class="admin-pagination" aria-label="Table pagination">
+        <span class="admin-pagination__summary">
+            Page <%= pagination.currentPage %> of <%= pagination.totalPages %>
+        </span>
+
+        <a class="admin-pagination__link <%= pagination.hasPrev ? '' : 'is-disabled' %>"
+            href="<%= pagination.hasPrev ? buildPageUrl(pagination.prevPage) : '#' %>">
+            Prev
+        </a>
+
+        <div class="admin-pagination__pages">
+            <% pagination.pages.forEach((pageNumber) => { %>
+                <a class="admin-pagination__link <%= pageNumber === pagination.currentPage ? 'is-active' : '' %>"
+                    href="<%= buildPageUrl(pageNumber) %>">
+                    <%= pageNumber %>
+                </a>
+            <% }) %>
+        </div>
+
+        <a class="admin-pagination__link <%= pagination.hasNext ? '' : 'is-disabled' %>"
+            href="<%= pagination.hasNext ? buildPageUrl(pagination.nextPage) : '#' %>">
+            Next
+        </a>
+    </nav>
+<% } %>

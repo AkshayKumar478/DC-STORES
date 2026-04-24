@@ -2,14 +2,9 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.css" rel="stylesheet">
 
 <div class="content orders-page">
-    <div class="admin-page">
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Orders</p>
-                <h1>Manage Orders</h1>
-                <p class="admin-page-subtitle">Review payments, update statuses, and handle return requests from one place.</p>
-            </div>
-            <span class="total-orders">Total Orders: <%= orders.length %></span>
+    <div class="admin-page admin-page--compact">
+        <div class="admin-page-header admin-page-header--actions-only">
+            <span class="total-orders">Total Orders: <%= totalOrders %></span>
         </div>
         <div class="table-container">
             <table>
@@ -122,14 +117,18 @@
                 </tbody>
             </table>
         </div>
+
+        <%- include('adminPagination', { pagination, basePath: '/admin/orders' }) %>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert2/11.7.32/sweetalert2.min.js"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    (function () {
+    function initOrdersPage() {
         // Handle individual item status updates
-        document.querySelectorAll('.item-status-select').forEach(select => {
+        document.querySelectorAll('.item-status-select:not([data-bound])').forEach(select => {
+            select.dataset.bound = 'true';
             select.addEventListener('change', function () {
                 const orderId = this.dataset.orderId;
                 const itemId = this.dataset.itemId;
@@ -188,7 +187,8 @@
         });
 
         // Handle mass status update form
-        document.querySelectorAll('.status-form').forEach(form => {
+        document.querySelectorAll('.status-form:not([data-bound])').forEach(form => {
+            form.dataset.bound = 'true';
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
 
@@ -234,7 +234,12 @@
                 icon: 'error'
             });
         }
-    });
+    }
+
+    window.initOrdersPage = initOrdersPage;
+    document.addEventListener('DOMContentLoaded', initOrdersPage);
+    window.addEventListener('admin:page-updated', initOrdersPage);
+    })();
 
     function showReturnRequestDetails(orderId, itemId, reason) {
         Swal.fire({

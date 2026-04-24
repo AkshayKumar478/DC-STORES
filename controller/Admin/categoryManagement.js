@@ -1,17 +1,27 @@
 
 const Product = require('../../models/productSchema');
 const Category = require('../../models/categorySchema');
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 
 
 // controller to render the category management page
 exports.getCategories = async (req, res) => {
     try {
-        const categories = await Category.find();  
+        const page = normalizePage(req.query.page);
+        const limit = DEFAULT_PAGE_SIZE;
+        const totalCategories = await Category.countDocuments();
+        const pagination = buildPagination(page, limit, totalCategories);
+        const categories = await Category.find()
+            .sort({ _id: -1 })
+            .skip((pagination.currentPage - 1) * limit)
+            .limit(limit);
         res.render('adminLayout', {
             title:'Category',
             content:'partials/adminCategory',
             categories,
+            pagination,
+            totalCategories,
             error:req.flash('error_msg')|| null,
             success_msg:req.flash('success_msg')||null
         });

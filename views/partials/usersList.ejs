@@ -2,17 +2,12 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
 <div class="main-content users-page">
-    <div class="admin-page">
+    <div class="admin-page admin-page--compact">
         <input type="hidden" id="successMsg" value="<%= success_msg %>">
         <input type="hidden" id="errorMsg" value="<%= error_msg %>">
 
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Users</p>
-                <h1>Manage Users</h1>
-                <p class="admin-page-subtitle">Review customer accounts and control block or unblock access.</p>
-            </div>
-            <span class="admin-pill"><%= users.length %> user<%= users.length === 1 ? '' : 's' %></span>
+        <div class="admin-page-header admin-page-header--actions-only">
+            <span class="admin-pill"><%= totalUsers %> user<%= totalUsers === 1 ? '' : 's' %></span>
         </div>
 
         <div class="admin-table-card">
@@ -44,81 +39,90 @@
                 </table>
             </div>
         </div>
+
+        <%- include('adminPagination', { pagination, basePath: '/admin/users' }) %>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const successMsg = document.getElementById('successMsg').value;
-        const errorMsg = document.getElementById('errorMsg').value;
+    (function () {
+        function initUsersPage() {
+            const successMsg = document.getElementById('successMsg')?.value;
+            const errorMsg = document.getElementById('errorMsg')?.value;
 
-        if (successMsg) {
-            Swal.fire({
-                title: 'Success!',
-                text: successMsg,
-                icon: 'success',
-                timer: 3000,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false
-            });
-        }
+            if (successMsg) {
+                Swal.fire({
+                    title: 'Success!',
+                    text: successMsg,
+                    icon: 'success',
+                    timer: 3000,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false
+                });
+            }
 
-        if (errorMsg) {
-            Swal.fire({
-                title: 'Error!',
-                text: errorMsg,
-                icon: 'error',
-                timer: 3000,
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false
-            });
-        }
+            if (errorMsg) {
+                Swal.fire({
+                    title: 'Error!',
+                    text: errorMsg,
+                    icon: 'error',
+                    timer: 3000,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false
+                });
+            }
 
-        document.querySelectorAll('.block-form').forEach(form => {
-            form.addEventListener('submit', async function (e) {
-                e.preventDefault();
+            document.querySelectorAll('.block-form:not([data-bound])').forEach(form => {
+                form.dataset.bound = 'true';
+                form.addEventListener('submit', async function (e) {
+                    e.preventDefault();
 
-                const button = this.querySelector('button');
-                const isBlocked = button.classList.contains('btn-danger');
-                const action = isBlocked ? 'unblock' : 'block';
+                    const button = this.querySelector('button');
+                    const isBlocked = button.classList.contains('btn-danger');
+                    const action = isBlocked ? 'unblock' : 'block';
 
-                try {
-                    const result = await Swal.fire({
-                        title: 'Are you sure?',
-                        text: `Do you want to ${action} this user?`,
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#272727',
-                        cancelButtonColor: '#f44336',
-                        confirmButtonText: `Yes, ${action} user!`,
-                        cancelButtonText: 'Cancel'
-                    });
-
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: 'Processing...',
-                            text: `${action.charAt(0).toUpperCase() + action.slice(1)}ing user`,
-                            allowOutsideClick: false,
-                            didOpen: () => {
-                                Swal.showLoading();
-                            }
+                    try {
+                        const result = await Swal.fire({
+                            title: 'Are you sure?',
+                            text: `Do you want to ${action} this user?`,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#272727',
+                            cancelButtonColor: '#f44336',
+                            confirmButtonText: `Yes, ${action} user!`,
+                            cancelButtonText: 'Cancel'
                         });
 
-                        this.submit();
+                        if (result.isConfirmed) {
+                            Swal.fire({
+                                title: 'Processing...',
+                                text: `${action.charAt(0).toUpperCase() + action.slice(1)}ing user`,
+                                allowOutsideClick: false,
+                                didOpen: () => {
+                                    Swal.showLoading();
+                                }
+                            });
+
+                            this.submit();
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'Something went wrong. Please try again.',
+                            icon: 'error'
+                        });
                     }
-                } catch (error) {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        title: 'Error!',
-                        text: 'Something went wrong. Please try again.',
-                        icon: 'error'
-                    });
-                }
+                });
             });
-        });
-    });
+        }
+
+        window.initUsersPage = initUsersPage;
+        document.addEventListener('DOMContentLoaded', initUsersPage);
+        window.addEventListener('admin:page-updated', initUsersPage);
+    })();
 </script>

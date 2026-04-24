@@ -2,6 +2,7 @@
 const Product = require('../../models/productSchema');
 const Category = require('../../models/categorySchema');
 const Offer=require('../../models/offerSchema')
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 
 
@@ -9,12 +10,18 @@ const Offer=require('../../models/offerSchema')
 // controller to render offer management page
 exports.renderManageOffers=async(req, res)=>{
     try {
+        const page = normalizePage(req.query.page);
+        const limit = DEFAULT_PAGE_SIZE;
         const categories = await Category.find({ isListed: true });
         const products = await Product.find({ status: 'listed' });
+        const totalOffers = await Offer.countDocuments();
+        const pagination = buildPagination(page, limit, totalOffers);
         const offers = await Offer.find()
             .populate('categoryId')
             .populate('productId')
-            .sort('-createdAt');
+            .sort('-createdAt')
+            .skip((pagination.currentPage - 1) * limit)
+            .limit(limit);
         
         res.render('adminLayout', { 
             content:'partials/adminOffers',
@@ -22,6 +29,8 @@ exports.renderManageOffers=async(req, res)=>{
             categories, 
             products, 
             offers,
+            pagination,
+            totalOffers,
             message: req.flash('message')
         });
     } catch (error) {

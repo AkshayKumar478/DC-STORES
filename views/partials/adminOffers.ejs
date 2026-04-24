@@ -1,27 +1,18 @@
 <link rel="stylesheet" href="/stylesheets/adminOffers.css">
 
 <div class="main-content offers-page">
-    <div class="admin-page">
+    <div class="admin-page admin-page--compact">
         <% if (message) { %>
             <div class="message <%= message.includes('Error') ? 'error' : 'success' %>">
                 <%= message %>
             </div>
         <% } %>
 
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Offers</p>
-                <h1>Manage Offers</h1>
-                <p class="admin-page-subtitle">Set up category, product, and referral offers with the same admin theme.</p>
-            </div>
-        </div>
-
         <div class="admin-card offer-form-card mb-4">
             <div class="admin-card__body">
                 <div class="admin-page-header mb-3">
                     <div>
                         <h2 class="h4 mb-2">Create New Offer</h2>
-                        <p class="admin-page-subtitle mb-0">Choose an offer type and configure the discount details below.</p>
                     </div>
                 </div>
 
@@ -129,7 +120,6 @@
                 <div class="admin-page-header mb-3">
                     <div>
                         <h2 class="h4 mb-2">Current Offers</h2>
-                        <p class="admin-page-subtitle mb-0">View validity, status, and usage from one organized table.</p>
                     </div>
                 </div>
 
@@ -186,6 +176,8 @@
                 </div>
             </div>
         </div>
+
+        <%- include('adminPagination', { pagination, basePath: '/admin/offers/manage' }) %>
     </div>
 </div>
 

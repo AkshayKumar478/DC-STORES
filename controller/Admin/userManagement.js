@@ -1,17 +1,24 @@
 
 const bcrypt=require('bcryptjs')
 const User=require('../../models/userSchema')
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 
 
 
 //User management controllers
 exports.getUsers=async (req, res) => {
-    const users = await User.find(); 
+    const page = normalizePage(req.query.page);
+    const limit = DEFAULT_PAGE_SIZE;
+    const totalUsers = await User.countDocuments();
+    const pagination = buildPagination(page, limit, totalUsers);
+    const users = await User.find()
+        .sort({ _id: -1 })
+        .skip((pagination.currentPage - 1) * limit)
+        .limit(limit);
     const success_msg = req.session.success_msg;
     const error_msg = req.session.error_msg;
 
-    
     req.session.success_msg = null;
     req.session.error_msg = null;
 
@@ -19,6 +26,8 @@ exports.getUsers=async (req, res) => {
         title:"Users",
         content:'partials/usersList',
         users,
+        pagination,
+        totalUsers,
         success_msg: success_msg,
         error_msg: error_msg,
     }) 

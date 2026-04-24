@@ -1,29 +1,28 @@
 
 const Coupon=require('../../models/couponSchema')
+const { DEFAULT_PAGE_SIZE, normalizePage, normalizeLimit, buildPagination } = require('./pagination');
 
 
 // controller to render the coupon management page
 exports.renderCouponList = async (req, res) => {
     try {
-        const { page = 1, limit = 10 } = req.query;
-        const skip = (page - 1) * limit;
+        const page = normalizePage(req.query.page);
+        const limit = normalizeLimit(req.query.limit, DEFAULT_PAGE_SIZE);
+        const total = await Coupon.countDocuments();
+        const pagination = buildPagination(page, limit, total, { limit });
+        const skip = (pagination.currentPage - 1) * limit;
 
         const coupons = await Coupon.find()
             .sort({ createdAt: -1 })
             .skip(skip)
-            .limit(parseInt(limit));
-
-        const total = await Coupon.countDocuments();
+            .limit(limit);
 
         res.render('adminLayout', {
             title:'coupon management',
             content:'partials/adminCoupons',
             coupons,
-            pagination: {
-                currentPage: parseInt(page),
-                totalPages: Math.ceil(total / limit),
-                totalCoupons: total
-            }
+            pagination,
+            totalCoupons: total
         });
     } catch (error) {
         console.error('Error in renderCouponList:', error);

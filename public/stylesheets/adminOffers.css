@@ -25,6 +25,10 @@
     margin-top: 24px;
 }
 
+.offers-page .admin-page--compact .offer-form-card + .offer-form-card {
+    margin-top: 18px;
+}
+
 .offers-page .table td:last-child {
     min-width: 210px;
 }

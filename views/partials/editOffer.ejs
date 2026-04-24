@@ -13,14 +13,6 @@
 
 <body class="admin-standalone">
     <div class="admin-form-page offers-page">
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Offers</p>
-                <h1>Edit Offer</h1>
-                <p class="admin-page-subtitle">Refine the offer details with the same admin styling used across the rest of the panel.</p>
-            </div>
-        </div>
-
         <% if (message) { %>
             <div class="message <%= message.includes('Error') ? 'error' : 'success' %> mb-4">
                 <%= message %>

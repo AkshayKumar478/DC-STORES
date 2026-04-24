@@ -11,6 +11,9 @@
 }
 
 .orders-page .table-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     overflow: auto;
     border: 1px solid var(--admin-border);
     border-radius: 24px;
@@ -19,7 +22,11 @@
 }
 
 .orders-page table {
+    width: 100%;
     min-width: 1180px;
+    margin: 0;
+    border-collapse: separate;
+    border-spacing: 0;
 }
 
 .orders-page th {
@@ -41,6 +48,23 @@
     color: var(--admin-text);
     background: #ffffff;
     vertical-align: top;
+}
+
+.orders-page .admin-page--compact .table-container {
+    border-radius: 20px;
+}
+
+.orders-page .admin-page--compact th {
+    padding: 13px 16px;
+}
+
+.orders-page .admin-page--compact td {
+    padding: 14px 16px;
+}
+
+.orders-page .admin-page--compact .item-row {
+    padding: 10px;
+    border-radius: 14px;
 }
 
 .orders-page tr:nth-child(even) td {

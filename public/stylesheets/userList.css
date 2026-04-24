@@ -1,5 +1,29 @@
+.users-page .admin-table {
+    table-layout: fixed;
+    min-width: 760px;
+}
+
+.users-page .admin-table th:first-child,
+.users-page .admin-table td:first-child {
+    width: 32%;
+}
+
+.users-page .admin-table th:nth-child(2),
+.users-page .admin-table td:nth-child(2) {
+    width: 52%;
+}
+
+.users-page .admin-table th:last-child,
 .users-page .admin-table td:last-child {
-    width: 180px;
+    width: 16%;
+    min-width: 130px;
+    text-align: center;
+}
+
+.users-page .admin-table thead th,
+.users-page .admin-table tbody td {
+    padding-top: 18px;
+    padding-bottom: 18px;
 }
 
 .user-email {
@@ -8,5 +32,7 @@
 }
 
 .block-form {
+    display: flex;
+    justify-content: center;
     margin: 0;
 }

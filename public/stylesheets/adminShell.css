@@ -118,6 +118,12 @@
 
 .content {
     min-height: calc(100vh - 120px);
+    transition: opacity 0.18s ease;
+}
+
+.content.is-admin-loading {
+    opacity: 0.55;
+    pointer-events: none;
 }
 
 .main-content,
@@ -132,12 +138,44 @@
     padding: 8px 0 32px;
 }
 
+.admin-page--compact {
+    max-width: 1440px;
+    padding: 0 0 24px;
+}
+
+.admin-page--compact .admin-page-header {
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.admin-page--compact .admin-page-subtitle {
+    max-width: 680px;
+}
+
+.admin-page--compact .admin-card__body,
+.admin-page--compact .admin-form-card {
+    padding: 20px;
+}
+
+.admin-page--compact .admin-table thead th {
+    padding: 13px 16px;
+}
+
+.admin-page--compact .admin-table tbody td {
+    padding: 12px 16px;
+}
+
 .admin-page-header {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 24px;
+}
+
+.admin-page-header--actions-only {
+    justify-content: flex-end;
+    margin-bottom: 14px;
 }
 
 .admin-page-header__eyebrow {
@@ -202,6 +240,7 @@
 
 .admin-table {
     width: 100%;
+    min-width: 1040px;
     margin: 0;
     border-collapse: separate;
     border-spacing: 0;
@@ -391,6 +430,63 @@
     font-weight: 700;
 }
 
+.admin-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+}
+
+.admin-pagination__summary {
+    margin-right: auto;
+    color: var(--admin-text-soft);
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.admin-pagination__pages {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.admin-pagination__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    padding: 9px 13px;
+    border: 1px solid var(--admin-border);
+    border-radius: 12px;
+    background: #ffffff;
+    color: var(--admin-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.admin-pagination__link:hover {
+    background: #fff7ea;
+    border-color: rgba(255, 152, 0, 0.35);
+    color: var(--admin-text);
+    text-decoration: none;
+}
+
+.admin-pagination__link.is-active {
+    background: var(--admin-text);
+    border-color: var(--admin-text);
+    color: #ffffff;
+}
+
+.admin-pagination__link.is-disabled {
+    pointer-events: none;
+    opacity: 0.45;
+}
+
 @media (max-width: 1100px) {
     .admin-sidebar {
         position: static;
@@ -414,6 +510,15 @@
     .admin-page-header {
         flex-direction: column;
         align-items: stretch;
+    }
+
+    .admin-pagination {
+        justify-content: flex-start;
+    }
+
+    .admin-pagination__summary {
+        width: 100%;
+        margin-right: 0;
     }
 
     .admin-form-card {

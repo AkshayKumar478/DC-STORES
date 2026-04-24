@@ -3,6 +3,7 @@ const Category = require('../../models/categorySchema');
 const path = require('path');
 const sharp = require('sharp');
 const { v4: uuidv4 } = require('uuid');
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 const fs = require('fs').promises;
 const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
@@ -10,11 +11,18 @@ const uploadDir = path.join(__dirname, '..', '..', 'public', 'uploads');
 //controller to render product management page
 exports.getProducts=async(req,res)=>{
     try{
-        const products=await Product.find({}).sort({ _id: -1 });
+        const page = normalizePage(req.query.page);
+        const limit = DEFAULT_PAGE_SIZE;
+        const totalProducts = await Product.countDocuments();
+        const pagination = buildPagination(page, limit, totalProducts);
+        const products=await Product.find({})
+            .sort({ _id: -1 })
+            .skip((pagination.currentPage - 1) * limit)
+            .limit(limit);
         const successMessages = req.flash('success_msg');
         const errorMessages = req.flash('error_msg');
 
-        if (!products || products.length === 0) {
+        if (totalProducts === 0) {
             errorMessages.push('No products found.');
         }
 
@@ -22,6 +30,8 @@ exports.getProducts=async(req,res)=>{
             title:"Products",
             content:'partials/adminProductList',
             products,
+            pagination,
+            totalProducts,
             success_msg: successMessages.join(' '),
             error_msg: errorMessages.join(' ')
         }) 

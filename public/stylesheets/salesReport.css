@@ -5,8 +5,25 @@
     margin: 24px 0;
 }
 
+.sales-report-page .admin-form-card {
+    max-width: 100%;
+}
+
+.sales-report-page .admin-filter {
+    grid-template-columns: repeat(4, minmax(180px, 1fr));
+}
+
+.sales-report-page .admin-page--compact .summary-grid {
+    margin: 18px 0;
+    gap: 14px;
+}
+
 .sales-report-page .summary-card {
     padding: 20px;
+}
+
+.sales-report-page .admin-page--compact .summary-card {
+    padding: 16px;
 }
 
 .sales-report-page .summary-card .label {
@@ -30,6 +47,10 @@
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 20px;
+}
+
+.sales-report-page .admin-page--compact .actions {
+    margin-bottom: 16px;
 }
 
 .sales-report-page .download-link {

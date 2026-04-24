@@ -3,6 +3,7 @@ const Order=require('../../models/OrderSchema')
 const PDFDocument = require('pdfkit');
 const ExcelJS = require('exceljs');
 const moment=require('moment');
+const { DEFAULT_PAGE_SIZE, normalizePage, buildPagination } = require('./pagination');
 
 
 
@@ -11,6 +12,7 @@ const moment=require('moment');
 exports.getSalesReport = async (req, res) => {
     try {
         const { startDate, endDate, reportType = 'daily' } = req.query;
+        const page = normalizePage(req.query.page);
         
         const query = { orderStatus: { $ne: 'Cancelled' } };
         
@@ -32,7 +34,7 @@ exports.getSalesReport = async (req, res) => {
             }
         }
 
-        const orders = await Order.find(query);
+        const orders = await Order.find(query).sort({ createdAt: -1 });
         let aggregatedOrders;
         let report;
 
@@ -56,14 +58,26 @@ exports.getSalesReport = async (req, res) => {
                 break;
         }
 
+        const pagination = buildPagination(page, DEFAULT_PAGE_SIZE, aggregatedOrders.length, {
+            startDate,
+            endDate,
+            reportType
+        });
+        const paginatedOrders = aggregatedOrders.slice(
+            (pagination.currentPage - 1) * DEFAULT_PAGE_SIZE,
+            pagination.currentPage * DEFAULT_PAGE_SIZE
+        );
+
         res.render('adminLayout', {
             content: 'partials/salesReport',
             title: 'salesReport',
-            orders: aggregatedOrders,
+            orders: paginatedOrders,
             report,
             startDate,
             endDate,
             reportType,
+            pagination,
+            totalReportRows: aggregatedOrders.length,
             moment: require('moment') 
         });
     } catch (error) {

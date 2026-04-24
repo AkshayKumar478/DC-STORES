@@ -1,7 +1,56 @@
+.category-page .admin-page--compact {
+    max-width: 1360px;
+    padding-top: 0;
+}
+
+.category-page .admin-page-header {
+    margin-bottom: 8px;
+}
+
+.category-page .admin-page-header--actions-only {
+    margin-top: 0;
+}
+
+.category-page .admin-table-card {
+    max-width: 1240px;
+    margin: 28px auto 0 0;
+}
+
+.category-page .admin-table {
+    width: 100%;
+    min-width: 1120px;
+    table-layout: fixed;
+}
+
+.category-page .admin-table thead th,
+.category-page .admin-table tbody td {
+    padding-top: 16px;
+    padding-bottom: 16px;
+}
+
+.category-page .admin-table th:nth-child(1),
+.category-page .admin-table td:nth-child(1) {
+    width: 30%;
+}
+
+.category-page .admin-table th:nth-child(2),
+.category-page .admin-table td:nth-child(2),
+.category-page .admin-table th:nth-child(3),
+.category-page .admin-table td:nth-child(3) {
+    width: 18%;
+    text-align: center;
+}
+
+.category-page .admin-table th:nth-child(4),
+.category-page .admin-table td:nth-child(4) {
+    width: 34%;
+    text-align: center;
+}
+
 .category-page .category-image {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
     object-fit: cover;
     border: 1px solid var(--admin-border);
     background: #fcfbfa;
@@ -10,12 +59,18 @@
 .category-actions {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 8px;
 }
 
 .category-actions form {
     margin: 0;
+}
+
+.category-page .category-actions .btn {
+    min-width: 84px;
+    padding: 8px 12px;
 }
 
 .AddCategory {
@@ -33,4 +88,14 @@
 
 .AddCategory:hover {
     background: var(--admin-accent-dark);
+}
+
+@media (max-width: 768px) {
+    .category-page .admin-table-card {
+        max-width: 100%;
+    }
+
+    .category-page .admin-table {
+        min-width: 760px;
+    }
 }

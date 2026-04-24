@@ -1,12 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/adminCategory.css">
 <div class="main-content category-page">
-    <div class="admin-page">
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Categories</p>
-                <h1>Manage Categories</h1>
-                <p class="admin-page-subtitle">Keep product groups organized with better visibility and cleaner controls.</p>
-            </div>
+    <div class="admin-page admin-page--compact">
+        <div class="admin-page-header admin-page-header--actions-only">
             <button type="button" class="AddCategory" data-toggle="modal" data-target="#addCategoryModal">
                 Add New Category
             </button>
@@ -63,6 +58,8 @@
                 </table>
             </div>
         </div>
+
+        <%- include('adminPagination', { pagination, basePath: '/admin/categories' }) %>
     </div>
 </div>
 

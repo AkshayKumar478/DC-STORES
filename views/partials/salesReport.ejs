@@ -1,15 +1,7 @@
 <link rel="stylesheet" href="/stylesheets/salesReport.css">
 
 <div class="main-content sales-report-page">
-    <div class="admin-page">
-        <div class="admin-page-header">
-            <div>
-                <p class="admin-page-header__eyebrow">Reports</p>
-                <h1>Sales Report</h1>
-                <p class="admin-page-subtitle">Filter performance by date range and download the summary in PDF or Excel.</p>
-            </div>
-        </div>
-
+    <div class="admin-page admin-page--compact">
         <div class="admin-form-card mb-4">
             <form method="GET" action="/admin/sales-report" class="admin-form-grid admin-filter">
                 <div class="form-group">
@@ -57,10 +49,10 @@
         </div>
 
         <div class="actions">
-            <a href="/admin/sales-report/pdf?startDate=<%= startDate %>&endDate=<%= endDate %>" class="download-link">
+            <a href="/admin/sales-report/pdf?startDate=<%= startDate %>&endDate=<%= endDate %>&reportType=<%= reportType %>" class="download-link">
                 Download PDF
             </a>
-            <a href="/admin/sales-report/excel?startDate=<%= startDate %>&endDate=<%= endDate %>" class="download-link">
+            <a href="/admin/sales-report/excel?startDate=<%= startDate %>&endDate=<%= endDate %>&reportType=<%= reportType %>" class="download-link">
                 Download Excel
             </a>
         </div>
@@ -99,5 +91,7 @@
                 </table>
             </div>
         </div>
+
+        <%- include('adminPagination', { pagination, basePath: '/admin/sales-report' }) %>
     </div>
 </div>

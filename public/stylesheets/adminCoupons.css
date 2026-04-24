@@ -2,6 +2,16 @@
     min-width: 180px;
 }
 
+.coupons-page .admin-table-card {
+    min-height: 520px;
+}
+
+.coupons-page .admin-table thead th,
+.coupons-page .admin-table tbody td {
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+
 .coupon-code {
     font-weight: 800;
     letter-spacing: 0.04em;

@@ -3,13 +3,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link rel="stylesheet" href="/stylesheets/adminProductList.css">
 <div class="main-content">
-
-    <div class="container product-management-container">
-        <div class="product-page-header">
-            <div>
-                <p class="page-kicker">Inventory</p>
-                <h1>Manage Products</h1>
-            </div>
+    <div class="container product-management-container admin-page admin-page--compact">
+        <div class="product-page-header product-page-header--actions-only">
             <a href="/admin/products/add" class="add-product-btn btn-success">
                 <i class="fa fa-plus"></i> Add Product
             </a>
@@ -92,6 +87,7 @@
         </div>
 
 
+        <%- include('adminPagination', { pagination, basePath: '/admin/products' }) %>
     </div>
 </div>
 <style>
