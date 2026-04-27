@@ -1,0 +1,201 @@
+DC-STORES PROJECT DETAILS
+=========================
+
+Project Name:
+DC-Stores
+
+Project Type:
+Fashion e-commerce website with separate user and admin modules.
+
+Project Overview:
+DC-Stores is a full-stack fashion website built to provide a smooth shopping experience for customers and a practical management system for administrators. The project includes user authentication, product browsing, category filtering, search, cart and wishlist management, checkout, online payment integration, coupon support, wallet handling, order history, admin dashboard, product and category management, offer management, coupon management, order management, and downloadable sales reports.
+
+Core Features Implemented:
+- User signup and login
+- OTP-based email verification during signup
+- Google login
+- Session-based authentication
+- Product listing with search, sorting, filtering, and pagination
+- Product detail pages with related products
+- Wishlist management
+- Cart management with quantity updates and live cart count
+- Address book management
+- Checkout flow
+- Coupon validation and discount calculation
+- Wallet balance and wallet transaction history
+- Cash on Delivery, wallet payment, and Razorpay online payment
+- Payment retry for failed online payments
+- Order history with cancel and return options
+- Admin dashboard with statistics
+- User management
+- Product management
+- Category management
+- Offer management
+- Coupon management
+- Order management
+- Sales reports with PDF and Excel export
+
+Techniques Used And Why They Improved The Website:
+
+1. MVC-style project structure
+The project is organized into routes, controllers, models, config, middlewares, views, and public assets. This improved maintainability because each responsibility is separated clearly. It made the code easier to expand with features like offers, wallet, reports, and admin tools without mixing business logic into the views.
+
+2. Server-side rendering with EJS
+EJS was used to render dynamic pages on the server. This helped the website load complete pages with product, cart, order, and dashboard data already prepared. It also made it easier to build multi-page admin and user flows without a separate frontend framework.
+
+3. MongoDB with Mongoose
+MongoDB was used as the database and Mongoose handled schemas, model relationships, validation, and queries. This improved development speed and made it easier to manage entities such as users, products, categories, orders, coupons, offers, wallets, OTPs, and addresses in a structured way.
+
+4. Session-based authentication
+Express sessions were used to keep users and admins logged in securely across requests. This improved user experience by allowing protected pages such as profile, cart, checkout, orders, and admin pages to stay connected to the logged-in account.
+
+5. Password hashing with bcrypt
+Passwords are hashed before being stored. This improved security because user passwords are not saved in plain text.
+
+6. OTP verification using email
+OTP verification was implemented during signup with Nodemailer. This improved account quality and trust because only users with access to the entered email can complete registration.
+
+7. Google OAuth login with Passport
+Passport with Google OAuth was used to support Google sign-in in addition to local login. This improved convenience and reduced friction for users who prefer a faster social login flow.
+
+8. Pagination
+Pagination was implemented in important listing pages such as products, users, orders, categories, coupons, offers, and sales reports.
+
+Why pagination was implemented:
+- To avoid loading too many records at once
+- To keep pages faster and lighter
+- To make navigation easier when the data grows
+- To improve the admin experience when managing large numbers of products, users, or orders
+- To reduce visual clutter on the frontend
+
+How pagination improved the website:
+- Better performance because fewer items are fetched and rendered per request
+- Better scalability because the system remains usable as the database grows
+- Better user experience because visitors can browse products page by page
+- Better admin productivity because management screens stay cleaner and easier to handle
+
+9. Search, sort, and category filtering
+The product list supports search, price sorting, name sorting, and category filtering. This improved usability by helping customers quickly find the products they want instead of scrolling through the entire catalog.
+
+10. Offer and discount logic
+The project applies product-level and category-level offers and calculates the best available offer price. This improved the shopping experience by showing customers meaningful deals and making the storefront more marketable.
+
+11. Coupon validation at checkout
+Coupon logic checks status, expiry, usage limit, minimum order value, and discount type. This improved reliability because discounts are applied only when valid business conditions are met.
+
+12. Wallet system
+A wallet feature was implemented to store balance and track wallet transactions. This improved flexibility for users, especially for refunds and wallet-based payments.
+
+13. Razorpay payment gateway integration
+Razorpay was integrated for online payments, along with payment verification using signatures and retry handling for failed payments. This improved the website by making the checkout flow more complete and production-oriented.
+
+14. Image processing and upload handling
+Multer was used for file handling and Sharp was used to process and resize product images. This improved the website by keeping product images more consistent in size and presentation, which helps page appearance and can reduce unnecessary image weight.
+
+15. Admin dashboard analytics
+The dashboard uses aggregated order data to calculate sales statistics, top products, and top categories. This improved the business side of the website by giving the admin useful insights for monitoring performance.
+
+16. Report generation
+PDF and Excel sales report downloads were implemented. This improved the website by making business data portable, easier to review, and useful for tracking performance outside the application.
+
+17. Flash messages and user feedback
+Connect-flash and alert-based UI feedback were used to display success and error messages. This improved the experience by giving clear responses after actions like login, product updates, and checkout events.
+
+18. Middleware-based reusable logic
+Middleware was used for access control and shared logic like cart count updates. This improved code reuse and helped keep route handlers cleaner.
+
+Full Stack Used:
+
+Backend:
+- Node.js
+- Express.js
+
+Frontend:
+- EJS templating
+- HTML
+- CSS
+- JavaScript
+- Bootstrap 5
+
+Database:
+- MongoDB
+- Mongoose
+
+Authentication And Security:
+- express-session
+- Passport
+- passport-local
+- passport-google-oauth20
+- bcryptjs
+
+Payments:
+- Razorpay
+
+File And Image Handling:
+- Multer
+- Sharp
+- UUID
+- uid2
+
+Communication:
+- Nodemailer
+
+Reporting And Analytics:
+- Chart.js
+- PDFKit
+- ExcelJS
+- Moment.js
+
+Environment And Development:
+- dotenv
+- nodemon
+
+UI Feedback:
+- SweetAlert2
+- connect-flash
+
+Libraries Used In This Project:
+- bcryptjs
+- bootstrap
+- chart.js
+- connect-flash
+- dotenv
+- ejs
+- exceljs
+- express
+- express-session
+- moment
+- mongodb
+- mongoose
+- multer
+- nodemailer
+- passport
+- passport-google-oauth20
+- passport-local
+- pdfkit
+- razorpay
+- sharp
+- sweetalert2
+- uid2
+- uuid
+- nodemon (development)
+
+Project Architecture:
+- config: database, OAuth, Razorpay, multer configuration
+- controller/Admin: admin business logic
+- controller/User: user-side business logic
+- middlewares: authentication and shared request logic
+- models: database schema definitions
+- routes: user and admin route handling
+- views: EJS templates for user and admin pages
+- public: CSS, client-side JavaScript, images, and uploaded files
+
+Why This Project Is Strong Technically:
+- It combines authentication, payments, reporting, and admin management in one application
+- It handles both customer-facing and admin-facing workflows
+- It uses reusable backend patterns such as controllers, middleware, and schema-based models
+- It includes real e-commerce concerns such as offers, coupons, stock control, wallet refunds, and order tracking
+- It improves performance and usability through pagination, filtering, image processing, and focused data rendering
+
+Conclusion:
+DC-Stores is more than a basic shopping site. It is a structured full-stack fashion e-commerce project that demonstrates backend development, database design, authentication, payment integration, admin operations, reporting, and practical performance-oriented features like pagination and optimized image handling.
